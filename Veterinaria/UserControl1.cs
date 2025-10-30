@@ -26,9 +26,9 @@ namespace Veterinaria
 
             CargarUsuarios();
         }
-        
 
-            private void CargarUsuarios()
+
+        private void CargarUsuarios()
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Veterinaria
             };
             comboBoxServicio.DataSource = servicios;
         }
-        
+
         private void btnGuardarCita_Click(object sender, EventArgs e)
         {
             if (comboBoxUsuarios.SelectedValue == null ||
@@ -81,7 +81,7 @@ namespace Veterinaria
                     MascotaNombre = txtNombreMascota.Text.Trim(),
                     FechaCita = dtpFecha.Value.ToString("yyyy-MM-dd"),
                     HoraCita = dtpFecha.Value.ToString("hh:mm tt"),
-                    ServicioCita = comboBoxServicio.SelectedItem.ToString(),                    
+                    ServicioCita = comboBoxServicio.SelectedItem.ToString(),
                     NotasCita = txtNotas.Text.Trim(),
                     FechaCreacion = DateTime.Now
                 };
@@ -118,20 +118,19 @@ namespace Veterinaria
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("¿Deseas cancelar la creación de la cita?", "Cancelar",
-                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                // Limpiar todos los campos
-                comboBoxUsuarios.SelectedIndex = -1;
-                txtNombreMascota.Clear();
-             
+            var respuesta = MessageBox.Show("¿Seguro que deseas cancelar la creación de la cita?",
+         "Cancelar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                MessageBox.Show("Campos limpiados.", "Información",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (respuesta == DialogResult.Yes)
+            {               
+                // Quita el control actual del contenedor
+                this.Parent.Controls.Remove(this);
+                this.Visible = false;
+                
             }
         }
-    }
 
     }
+}
 
 

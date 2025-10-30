@@ -271,6 +271,7 @@ namespace Veterinaria
             UserControl1 nuevaCita = new UserControl1();
             nuevaCita.Dock = DockStyle.Fill;
             panelCrearCita.Controls.Add(nuevaCita);
+            this.Enabled = false;
         }
     }
 }
