@@ -140,7 +140,7 @@
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.BackgroundImage = global::Veterinaria.Properties.Resources.Captura_de_pantalla_2025_10_30_130553;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Location = new System.Drawing.Point(64, 152);
+            this.panel1.Location = new System.Drawing.Point(87, 186);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(913, 295);
             this.panel1.TabIndex = 25;
