@@ -252,6 +252,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mongocrypt.dll" />
+    <None Include="Resources\Captura de pantalla 2025-10-30 133424.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-30 132816.png" />
+    <None Include="Resources\Captura de pantalla 2025-10-30 132255.png" />
     <None Include="Resources\Captura de pantalla 2025-10-30 130553.png" />
     <None Include="Resources\Captura de pantalla 2025-10-30 101949.png" />
     <None Include="Resources\Captura de pantalla 2025-10-30 100714.png" />
