@@ -59,14 +59,14 @@ namespace Veterinaria
                 "Corte de Uñas",
                 "Baño y Aseo"
             };
-            comboBox2.DataSource = servicios;
+            comboBoxServicio.DataSource = servicios;
         }
         
         private void btnGuardarCita_Click(object sender, EventArgs e)
         {
             if (comboBoxUsuarios.SelectedValue == null ||
-                string.IsNullOrEmpty(textBox2.Text.Trim()) ||
-                string.IsNullOrEmpty(comboBox2.Text.Trim()))
+                string.IsNullOrEmpty(txtNombreMascota.Text.Trim()) ||
+                string.IsNullOrEmpty(comboBoxServicio.Text.Trim()))
             {
                 MessageBox.Show("Por favor complete todos los campos.", "Advertencia",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -78,10 +78,10 @@ namespace Veterinaria
                 Citas nuevaCita = new Citas
                 {
                     UsuarioDocumento = comboBoxUsuarios.SelectedValue.ToString(),
-                    MascotaNombre = textBox2.Text.Trim(),
-                    FechaCita = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
-                    HoraCita = dateTimePicker1.Value.ToString("hh:mm tt"),
-                    ServicioCita = comboBox2.SelectedItem.ToString(),                    
+                    MascotaNombre = txtNombreMascota.Text.Trim(),
+                    FechaCita = dtpFecha.Value.ToString("yyyy-MM-dd"),
+                    HoraCita = dtpFecha.Value.ToString("hh:mm tt"),
+                    ServicioCita = comboBoxServicio.SelectedItem.ToString(),                    
                     NotasCita = txtNotas.Text.Trim(),
                     FechaCreacion = DateTime.Now
                 };
@@ -92,11 +92,11 @@ namespace Veterinaria
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Limpiar campos
-                textBox2.Clear();
-                comboBox2.SelectedIndex = 0;
-                dateTimePicker1.Value = DateTime.Now;
-                dateTimePicker1.Value = DateTime.Now;
-                comboBox2.SelectedIndex = 0;
+                txtNombreMascota.Clear();
+                comboBoxServicio.SelectedIndex = 0;
+                dtpFecha.Value = DateTime.Now;
+                dtpFecha.Value = DateTime.Now;
+                comboBoxServicio.SelectedIndex = 0;
                 txtNotas.Clear();
             }
             catch (Exception ex)
@@ -114,6 +114,21 @@ namespace Veterinaria
         private void UserControl1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("¿Deseas cancelar la creación de la cita?", "Cancelar",
+                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                // Limpiar todos los campos
+                comboBoxUsuarios.SelectedIndex = -1;
+                txtNombreMascota.Clear();
+             
+
+                MessageBox.Show("Campos limpiados.", "Información",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 
