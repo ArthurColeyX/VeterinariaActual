@@ -117,17 +117,18 @@ namespace Veterinaria
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            var respuesta = MessageBox.Show("¿Seguro que deseas cancelar la creación de la cita?",
-         "Cancelar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        { // Oculta este panel
+            this.Visible = false;
 
-            if (respuesta == DialogResult.Yes)
-            {               
-                // Quita el control actual del contenedor
-                this.Parent.Controls.Remove(this);
-                this.Visible = false;
-                
+            // 🔓 Reactiva los paneles del formulario principal
+            if (this.Tag is FrmAdmin parentForm)
+            {
+                parentForm.PanelCerrarSAdPublic.Enabled = true;
+                parentForm.PanelGestionUsuariosPublic.Enabled = true;
             }
+
+            // Opcional: elimina el control del contenedor
+            this.Dispose();
         }
 
     }

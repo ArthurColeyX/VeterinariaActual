@@ -13,6 +13,8 @@ namespace Veterinaria
         private readonly IMongoCollection<Usuarios> _usuariosCollection;
         private readonly IMongoCollection<Citas> _citasCollection;
 
+        public Panel PanelCerrarSAdPublic => PanelCerrarSAd;
+        public Panel PanelGestionUsuariosPublic => panelGestionUsuarios;
         // ================= VARIABLES AUXILIARES =================
         private List<Usuarios> _usuariosActuales;
 
@@ -267,11 +269,12 @@ namespace Veterinaria
 
         private void btnNuevaCita_Click(object sender, EventArgs e)
         {
-            panelCrearCita.Visible = true;
-            UserControl1 nuevaCita = new UserControl1();
-            nuevaCita.Dock = DockStyle.Fill;
-            panelCrearCita.Controls.Add(nuevaCita);
-            this.Enabled = false;
+            UserControl1 userControlNuevaCita = new UserControl1();
+            panelCrearCita.Controls.Add(userControlNuevaCita);
+            PanelCerrarSAd.Enabled = false; // solo el contenido se bloquea
+            panelGestionUsuarios.Enabled = false;
+            userControlNuevaCita.Visible = true;
+            userControlNuevaCita.BringToFront();
         }
     }
 }
