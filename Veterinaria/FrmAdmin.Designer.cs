@@ -42,14 +42,15 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panelGestionUsuarios = new System.Windows.Forms.Panel();
-            this.datagridGestion = new System.Windows.Forms.DataGridView();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.lblTotalCitas = new System.Windows.Forms.Label();
-            this.lblCitasPendientes = new System.Windows.Forms.Label();
-            this.lblCitasCompletadas = new System.Windows.Forms.Label();
-            this.lblCitasConfirmadas = new System.Windows.Forms.Label();
-            this.btnEditarCita = new System.Windows.Forms.Button();
             this.btnEliminarCita = new System.Windows.Forms.Button();
+            this.btnEditarCita = new System.Windows.Forms.Button();
+            this.lblCitasConfirmadas = new System.Windows.Forms.Label();
+            this.lblCitasCompletadas = new System.Windows.Forms.Label();
+            this.lblCitasPendientes = new System.Windows.Forms.Label();
+            this.lblTotalCitas = new System.Windows.Forms.Label();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.datagridGestion = new System.Windows.Forms.DataGridView();
+            this.panelCrearCita = new System.Windows.Forms.Panel();
             this.PanelCerrarSAd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogAdpictBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagenFiltro)).BeginInit();
@@ -226,58 +227,17 @@
             this.panelGestionUsuarios.TabIndex = 52;
             this.panelGestionUsuarios.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGestionUsuarios_Paint);
             // 
-            // datagridGestion
+            // btnEliminarCita
             // 
-            this.datagridGestion.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(249)))));
-            this.datagridGestion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.datagridGestion.Location = new System.Drawing.Point(59, 139);
-            this.datagridGestion.Name = "datagridGestion";
-            this.datagridGestion.Size = new System.Drawing.Size(704, 253);
-            this.datagridGestion.TabIndex = 52;
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Location = new System.Drawing.Point(361, 85);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(307, 20);
-            this.txtBuscar.TabIndex = 53;
-            // 
-            // lblTotalCitas
-            // 
-            this.lblTotalCitas.AutoSize = true;
-            this.lblTotalCitas.Location = new System.Drawing.Point(36, 110);
-            this.lblTotalCitas.Name = "lblTotalCitas";
-            this.lblTotalCitas.Size = new System.Drawing.Size(35, 13);
-            this.lblTotalCitas.TabIndex = 54;
-            this.lblTotalCitas.Text = "label3";
-            // 
-            // lblCitasPendientes
-            // 
-            this.lblCitasPendientes.AutoSize = true;
-            this.lblCitasPendientes.Location = new System.Drawing.Point(89, 110);
-            this.lblCitasPendientes.Name = "lblCitasPendientes";
-            this.lblCitasPendientes.Size = new System.Drawing.Size(35, 13);
-            this.lblCitasPendientes.TabIndex = 55;
-            this.lblCitasPendientes.Text = "label4";
-            this.lblCitasPendientes.Click += new System.EventHandler(this.lblCitasPendientes_Click);
-            // 
-            // lblCitasCompletadas
-            // 
-            this.lblCitasCompletadas.AutoSize = true;
-            this.lblCitasCompletadas.Location = new System.Drawing.Point(148, 110);
-            this.lblCitasCompletadas.Name = "lblCitasCompletadas";
-            this.lblCitasCompletadas.Size = new System.Drawing.Size(35, 13);
-            this.lblCitasCompletadas.TabIndex = 56;
-            this.lblCitasCompletadas.Text = "label5";
-            // 
-            // lblCitasConfirmadas
-            // 
-            this.lblCitasConfirmadas.AutoSize = true;
-            this.lblCitasConfirmadas.Location = new System.Drawing.Point(204, 110);
-            this.lblCitasConfirmadas.Name = "lblCitasConfirmadas";
-            this.lblCitasConfirmadas.Size = new System.Drawing.Size(35, 13);
-            this.lblCitasConfirmadas.TabIndex = 57;
-            this.lblCitasConfirmadas.Text = "label6";
+            this.btnEliminarCita.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(113)))), ((int)(((byte)(255)))));
+            this.btnEliminarCita.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminarCita.ForeColor = System.Drawing.Color.White;
+            this.btnEliminarCita.Location = new System.Drawing.Point(488, 405);
+            this.btnEliminarCita.Name = "btnEliminarCita";
+            this.btnEliminarCita.Size = new System.Drawing.Size(131, 33);
+            this.btnEliminarCita.TabIndex = 59;
+            this.btnEliminarCita.Text = "Eliminar Cita";
+            this.btnEliminarCita.UseVisualStyleBackColor = false;
             // 
             // btnEditarCita
             // 
@@ -291,17 +251,65 @@
             this.btnEditarCita.Text = "Editar Cita";
             this.btnEditarCita.UseVisualStyleBackColor = false;
             // 
-            // btnEliminarCita
+            // lblCitasConfirmadas
             // 
-            this.btnEliminarCita.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(113)))), ((int)(((byte)(255)))));
-            this.btnEliminarCita.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarCita.ForeColor = System.Drawing.Color.White;
-            this.btnEliminarCita.Location = new System.Drawing.Point(488, 405);
-            this.btnEliminarCita.Name = "btnEliminarCita";
-            this.btnEliminarCita.Size = new System.Drawing.Size(131, 33);
-            this.btnEliminarCita.TabIndex = 59;
-            this.btnEliminarCita.Text = "Eliminar Cita";
-            this.btnEliminarCita.UseVisualStyleBackColor = false;
+            this.lblCitasConfirmadas.AutoSize = true;
+            this.lblCitasConfirmadas.Location = new System.Drawing.Point(204, 110);
+            this.lblCitasConfirmadas.Name = "lblCitasConfirmadas";
+            this.lblCitasConfirmadas.Size = new System.Drawing.Size(35, 13);
+            this.lblCitasConfirmadas.TabIndex = 57;
+            this.lblCitasConfirmadas.Text = "label6";
+            // 
+            // lblCitasCompletadas
+            // 
+            this.lblCitasCompletadas.AutoSize = true;
+            this.lblCitasCompletadas.Location = new System.Drawing.Point(148, 110);
+            this.lblCitasCompletadas.Name = "lblCitasCompletadas";
+            this.lblCitasCompletadas.Size = new System.Drawing.Size(35, 13);
+            this.lblCitasCompletadas.TabIndex = 56;
+            this.lblCitasCompletadas.Text = "label5";
+            // 
+            // lblCitasPendientes
+            // 
+            this.lblCitasPendientes.AutoSize = true;
+            this.lblCitasPendientes.Location = new System.Drawing.Point(89, 110);
+            this.lblCitasPendientes.Name = "lblCitasPendientes";
+            this.lblCitasPendientes.Size = new System.Drawing.Size(35, 13);
+            this.lblCitasPendientes.TabIndex = 55;
+            this.lblCitasPendientes.Text = "label4";
+            this.lblCitasPendientes.Click += new System.EventHandler(this.lblCitasPendientes_Click);
+            // 
+            // lblTotalCitas
+            // 
+            this.lblTotalCitas.AutoSize = true;
+            this.lblTotalCitas.Location = new System.Drawing.Point(36, 110);
+            this.lblTotalCitas.Name = "lblTotalCitas";
+            this.lblTotalCitas.Size = new System.Drawing.Size(35, 13);
+            this.lblTotalCitas.TabIndex = 54;
+            this.lblTotalCitas.Text = "label3";
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Location = new System.Drawing.Point(361, 85);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(307, 20);
+            this.txtBuscar.TabIndex = 53;
+            // 
+            // datagridGestion
+            // 
+            this.datagridGestion.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(249)))));
+            this.datagridGestion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.datagridGestion.Location = new System.Drawing.Point(59, 139);
+            this.datagridGestion.Name = "datagridGestion";
+            this.datagridGestion.Size = new System.Drawing.Size(704, 253);
+            this.datagridGestion.TabIndex = 52;
+            // 
+            // panelCrearCita
+            // 
+            this.panelCrearCita.Location = new System.Drawing.Point(184, 34);
+            this.panelCrearCita.Name = "panelCrearCita";
+            this.panelCrearCita.Size = new System.Drawing.Size(565, 624);
+            this.panelCrearCita.TabIndex = 53;
             // 
             // FrmAdmin
             // 
@@ -312,6 +320,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(901, 670);
             this.ControlBox = false;
+            this.Controls.Add(this.panelCrearCita);
             this.Controls.Add(this.panelGestionUsuarios);
             this.Controls.Add(this.PanelCerrarSAd);
             this.Controls.Add(this.label12);
@@ -357,5 +366,6 @@
         private System.Windows.Forms.Label lblTotalCitas;
         private System.Windows.Forms.Button btnEliminarCita;
         private System.Windows.Forms.Button btnEditarCita;
+        private System.Windows.Forms.Panel panelCrearCita;
     }
 }

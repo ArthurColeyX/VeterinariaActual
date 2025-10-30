@@ -33,6 +33,7 @@ namespace Veterinaria
 
         private void FrmAdmin_Load(object sender, EventArgs e)
         {
+            panelCrearCita.Visible = false;
             CargarTodosLosUsuarios();
             ActualizarContadoresCitas();
         }
@@ -266,7 +267,10 @@ namespace Veterinaria
 
         private void btnNuevaCita_Click(object sender, EventArgs e)
         {
-
+            panelCrearCita.Visible = true;
+            UserControl1 nuevaCita = new UserControl1();
+            nuevaCita.Dock = DockStyle.Fill;
+            panelCrearCita.Controls.Add(nuevaCita);
         }
     }
 }
