@@ -199,6 +199,12 @@
     <Compile Include="UserControlEditarCita.Designer.cs">
       <DependentUpon>UserControlEditarCita.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControlMascota.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlMascota.Designer.cs">
+      <DependentUpon>UserControlMascota.cs</DependentUpon>
+    </Compile>
     <Compile Include="Usuarios.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -228,6 +234,9 @@
     <EmbeddedResource Include="UserControlEditarCita.resx">
       <DependentUpon>UserControlEditarCita.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControlMascota.resx">
+      <DependentUpon>UserControlMascota.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="libmongocrypt.dylib" />
     <None Include="libmongocrypt.so" />
     <None Include="packages.config" />
@@ -252,6 +261,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="mongocrypt.dll" />
+    <None Include="Resources\Captura de pantalla 2025-10-30 153739.png" />
     <None Include="Resources\Captura de pantalla 2025-10-30 133424.png" />
     <None Include="Resources\Captura de pantalla 2025-10-30 132816.png" />
     <None Include="Resources\Captura de pantalla 2025-10-30 132255.png" />

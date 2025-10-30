@@ -288,5 +288,11 @@ namespace Veterinaria
             F.Show();
             this.Hide();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            UserControlMascota mascotas = new UserControlMascota();
+            panelRegMascota.Controls.Add(mascotas);
+        }
     }
 }

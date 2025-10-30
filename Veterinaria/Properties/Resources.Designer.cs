@@ -273,6 +273,16 @@ namespace Veterinaria.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Captura_de_pantalla_2025_10_30_153739 {
+            get {
+                object obj = ResourceManager.GetObject("Captura de pantalla 2025-10-30 153739", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo_fotor_20251017165639 {
             get {
                 object obj = ResourceManager.GetObject("logo-fotor-20251017165639", resourceCulture);

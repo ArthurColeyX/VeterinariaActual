@@ -44,6 +44,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.panelRegMascota = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCitas)).BeginInit();
             this.PanelCerrarSAd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogAdpictBox)).BeginInit();
@@ -79,7 +80,7 @@
             this.PanelCerrarSAd.Controls.Add(this.LogAdpictBox);
             this.PanelCerrarSAd.Location = new System.Drawing.Point(0, 0);
             this.PanelCerrarSAd.Name = "PanelCerrarSAd";
-            this.PanelCerrarSAd.Size = new System.Drawing.Size(1322, 92);
+            this.PanelCerrarSAd.Size = new System.Drawing.Size(1351, 92);
             this.PanelCerrarSAd.TabIndex = 24;
             // 
             // CerrarSesionUsuario
@@ -89,7 +90,7 @@
             this.CerrarSesionUsuario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CerrarSesionUsuario.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CerrarSesionUsuario.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.CerrarSesionUsuario.Location = new System.Drawing.Point(1119, 15);
+            this.CerrarSesionUsuario.Location = new System.Drawing.Point(1142, 15);
             this.CerrarSesionUsuario.Name = "CerrarSesionUsuario";
             this.CerrarSesionUsuario.Size = new System.Drawing.Size(175, 51);
             this.CerrarSesionUsuario.TabIndex = 19;
@@ -174,6 +175,7 @@
             this.button1.TabIndex = 25;
             this.button1.Text = "    Registrar Mascota";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // pictureBox2
             // 
@@ -243,6 +245,13 @@
             this.label2.TabIndex = 20;
             this.label2.Text = "No tienes mascotas registradas";
             // 
+            // panelRegMascota
+            // 
+            this.panelRegMascota.Location = new System.Drawing.Point(427, 111);
+            this.panelRegMascota.Name = "panelRegMascota";
+            this.panelRegMascota.Size = new System.Drawing.Size(532, 560);
+            this.panelRegMascota.TabIndex = 26;
+            // 
             // FrmCitas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -253,6 +262,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1357, 948);
             this.ControlBox = false;
+            this.Controls.Add(this.panelRegMascota);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanelCerrarSAd);
             this.Controls.Add(this.dgvCitas);
@@ -291,5 +301,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panelRegMascota;
     }
 }
