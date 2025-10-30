@@ -16,5 +16,10 @@ namespace Veterinaria
         {
             InitializeComponent();
         }
+
+        private void UserControlEditarCita_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

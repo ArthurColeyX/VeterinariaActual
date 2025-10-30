@@ -183,7 +183,7 @@
             this.CrearCitaAdmi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(54)))), ((int)(((byte)(167)))));
             this.CrearCitaAdmi.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CrearCitaAdmi.ForeColor = System.Drawing.Color.White;
-            this.CrearCitaAdmi.Location = new System.Drawing.Point(65, 557);
+            this.CrearCitaAdmi.Location = new System.Drawing.Point(75, 521);
             this.CrearCitaAdmi.Name = "CrearCitaAdmi";
             this.CrearCitaAdmi.Size = new System.Drawing.Size(365, 43);
             this.CrearCitaAdmi.TabIndex = 43;
