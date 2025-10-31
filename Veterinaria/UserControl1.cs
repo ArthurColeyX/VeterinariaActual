@@ -22,7 +22,7 @@ namespace Veterinaria
             var db = ConexionMongo.ObtenerConexion();
             _citasCollection = db.GetCollection<Citas>("Citas");
             _usuariosCollection = db.GetCollection<Usuarios>("Usuarios");
-            _mascotasCollection = db.GetCollection<Mascota>("Mascota"); // 👈 como en Atlas
+            _mascotasCollection = db.GetCollection<Mascota>("Mascota"); 
 
             // Config inicial
             dtpFecha.MinDate = DateTime.Today;

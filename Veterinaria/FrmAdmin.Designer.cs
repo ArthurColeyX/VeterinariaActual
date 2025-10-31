@@ -67,7 +67,7 @@
             this.label12.ForeColor = System.Drawing.Color.White;
             this.label12.Location = new System.Drawing.Point(43, -54);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(192, 23);
+            this.label12.Size = new System.Drawing.Size(182, 23);
             this.label12.TabIndex = 19;
             this.label12.Text = "Gestión de Citas 👨‍👨‍👧‍👦‍❤️‍";
             // 
@@ -225,7 +225,6 @@
             this.panelGestionUsuarios.Name = "panelGestionUsuarios";
             this.panelGestionUsuarios.Size = new System.Drawing.Size(814, 451);
             this.panelGestionUsuarios.TabIndex = 52;
-            
             // 
             // btnEliminarCita
             // 
@@ -250,6 +249,7 @@
             this.btnEditarCita.TabIndex = 58;
             this.btnEditarCita.Text = "Editar Cita";
             this.btnEditarCita.UseVisualStyleBackColor = false;
+            this.btnEditarCita.Click += new System.EventHandler(this.btnEditarCita_Click);
             // 
             // lblCitasConfirmadas
             // 
@@ -277,7 +277,6 @@
             this.lblCitasPendientes.Size = new System.Drawing.Size(35, 13);
             this.lblCitasPendientes.TabIndex = 55;
             this.lblCitasPendientes.Text = "label4";
-            
             // 
             // lblTotalCitas
             // 

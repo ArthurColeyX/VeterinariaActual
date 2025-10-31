@@ -36,13 +36,14 @@
             this.dtpFechaEditar = new System.Windows.Forms.DateTimePicker();
             this.comboBoxUsuariosEditar = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBoxHoraEditar = new System.Windows.Forms.ComboBox();
             this.comboBoxServicioEditar = new System.Windows.Forms.ComboBox();
-            this.txtNombreMascotaEditar = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.dtpHoraEditar = new System.Windows.Forms.DateTimePicker();
+            this.comboBoxMascotasEditar = new System.Windows.Forms.ComboBox();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ActualizarCitaAdmi
@@ -56,6 +57,7 @@
             this.ActualizarCitaAdmi.TabIndex = 58;
             this.ActualizarCitaAdmi.Text = "Actualizar Cita";
             this.ActualizarCitaAdmi.UseVisualStyleBackColor = false;
+            this.ActualizarCitaAdmi.Click += new System.EventHandler(this.ActualizarCitaAdmi_Click);
             // 
             // label3
             // 
@@ -133,36 +135,6 @@
             this.label6.TabIndex = 64;
             this.label6.Text = "Fecha";
             // 
-            // comboBoxHoraEditar
-            // 
-            this.comboBoxHoraEditar.FormattingEnabled = true;
-            this.comboBoxHoraEditar.Items.AddRange(new object[] {
-            "8:00",
-            "8:30",
-            "9:00",
-            "9:30",
-            "10:00",
-            "10:30",
-            "11:00",
-            "11:30",
-            "12:00",
-            "12:30",
-            "13:00",
-            "13:30",
-            "14:00",
-            "14:30",
-            "15:00",
-            "15:30",
-            "16:00",
-            "16:30",
-            "17:00",
-            "17:30",
-            "18:00"});
-            this.comboBoxHoraEditar.Location = new System.Drawing.Point(49, 419);
-            this.comboBoxHoraEditar.Name = "comboBoxHoraEditar";
-            this.comboBoxHoraEditar.Size = new System.Drawing.Size(135, 21);
-            this.comboBoxHoraEditar.TabIndex = 63;
-            // 
             // comboBoxServicioEditar
             // 
             this.comboBoxServicioEditar.FormattingEnabled = true;
@@ -180,13 +152,6 @@
             this.comboBoxServicioEditar.Name = "comboBoxServicioEditar";
             this.comboBoxServicioEditar.Size = new System.Drawing.Size(135, 21);
             this.comboBoxServicioEditar.TabIndex = 62;
-            // 
-            // txtNombreMascotaEditar
-            // 
-            this.txtNombreMascotaEditar.Location = new System.Drawing.Point(280, 181);
-            this.txtNombreMascotaEditar.Name = "txtNombreMascotaEditar";
-            this.txtNombreMascotaEditar.Size = new System.Drawing.Size(159, 20);
-            this.txtNombreMascotaEditar.TabIndex = 61;
             // 
             // label7
             // 
@@ -232,10 +197,52 @@
             this.label5.TabIndex = 70;
             this.label5.Text = "Hora";
             // 
+            // dtpHoraEditar
+            // 
+            this.dtpHoraEditar.CustomFormat = "hh:mm tt";
+            this.dtpHoraEditar.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpHoraEditar.Location = new System.Drawing.Point(48, 417);
+            this.dtpHoraEditar.Name = "dtpHoraEditar";
+            this.dtpHoraEditar.ShowUpDown = true;
+            this.dtpHoraEditar.Size = new System.Drawing.Size(200, 20);
+            this.dtpHoraEditar.TabIndex = 71;
+            // 
+            // comboBoxMascotasEditar
+            // 
+            this.comboBoxMascotasEditar.FormattingEnabled = true;
+            this.comboBoxMascotasEditar.Items.AddRange(new object[] {
+            "🩺 Consulta General",
+            "",
+            "💉 Vacunación",
+            "",
+            "⚠️ Cirugía",
+            "",
+            "⚠️ Emergencia",
+            "",
+            "✂️ Groomig"});
+            this.comboBoxMascotasEditar.Location = new System.Drawing.Point(280, 180);
+            this.comboBoxMascotasEditar.Name = "comboBoxMascotasEditar";
+            this.comboBoxMascotasEditar.Size = new System.Drawing.Size(159, 21);
+            this.comboBoxMascotasEditar.TabIndex = 72;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Location = new System.Drawing.Point(440, 45);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(88, 35);
+            this.btnCancelar.TabIndex = 73;
+            this.btnCancelar.Text = "Volver";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // UserControlEditarCita
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.comboBoxMascotasEditar);
+            this.Controls.Add(this.dtpHoraEditar);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtNotasEditar);
@@ -243,9 +250,7 @@
             this.Controls.Add(this.dtpFechaEditar);
             this.Controls.Add(this.comboBoxUsuariosEditar);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.comboBoxHoraEditar);
             this.Controls.Add(this.comboBoxServicioEditar);
-            this.Controls.Add(this.txtNombreMascotaEditar);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ActualizarCitaAdmi);
@@ -269,12 +274,13 @@
         private System.Windows.Forms.DateTimePicker dtpFechaEditar;
         private System.Windows.Forms.ComboBox comboBoxUsuariosEditar;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBoxHoraEditar;
         private System.Windows.Forms.ComboBox comboBoxServicioEditar;
-        private System.Windows.Forms.TextBox txtNombreMascotaEditar;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker dtpHoraEditar;
+        private System.Windows.Forms.ComboBox comboBoxMascotasEditar;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }
