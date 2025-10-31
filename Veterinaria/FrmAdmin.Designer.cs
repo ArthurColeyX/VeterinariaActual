@@ -37,20 +37,22 @@
             this.btnMostrarTodos = new System.Windows.Forms.Button();
             this.btnNuevaCita = new System.Windows.Forms.Button();
             this.imagenFiltro = new System.Windows.Forms.PictureBox();
-            this.comboBoxCitas = new System.Windows.Forms.ComboBox();
+            this.comboBoxFiltroCitas = new System.Windows.Forms.ComboBox();
             this.BtnVerReportes = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panelGestionUsuarios = new System.Windows.Forms.Panel();
             this.btnEliminarCita = new System.Windows.Forms.Button();
             this.btnEditarCita = new System.Windows.Forms.Button();
+            this.panelCrearCita = new System.Windows.Forms.Panel();
             this.lblCitasConfirmadas = new System.Windows.Forms.Label();
             this.lblCitasCompletadas = new System.Windows.Forms.Label();
             this.lblCitasPendientes = new System.Windows.Forms.Label();
             this.lblTotalCitas = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.datagridGestion = new System.Windows.Forms.DataGridView();
-            this.panelCrearCita = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.PanelCerrarSAd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogAdpictBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagenFiltro)).BeginInit();
@@ -79,7 +81,7 @@
             this.PanelCerrarSAd.Controls.Add(this.label1);
             this.PanelCerrarSAd.Controls.Add(this.label15);
             this.PanelCerrarSAd.Controls.Add(this.LogAdpictBox);
-            this.PanelCerrarSAd.Location = new System.Drawing.Point(54, 51);
+            this.PanelCerrarSAd.Location = new System.Drawing.Point(54, 12);
             this.PanelCerrarSAd.Name = "PanelCerrarSAd";
             this.PanelCerrarSAd.Size = new System.Drawing.Size(775, 98);
             this.PanelCerrarSAd.TabIndex = 22;
@@ -93,6 +95,7 @@
             this.CerrarSesionAdmi.Size = new System.Drawing.Size(138, 47);
             this.CerrarSesionAdmi.TabIndex = 19;
             this.CerrarSesionAdmi.UseVisualStyleBackColor = true;
+            this.CerrarSesionAdmi.Click += new System.EventHandler(this.CerrarSesionAdmi_Click);
             // 
             // label1
             // 
@@ -157,21 +160,22 @@
             this.imagenFiltro.TabIndex = 40;
             this.imagenFiltro.TabStop = false;
             // 
-            // comboBoxCitas
+            // comboBoxFiltroCitas
             // 
-            this.comboBoxCitas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCitas.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxCitas.FormattingEnabled = true;
-            this.comboBoxCitas.Items.AddRange(new object[] {
+            this.comboBoxFiltroCitas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFiltroCitas.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxFiltroCitas.FormattingEnabled = true;
+            this.comboBoxFiltroCitas.Items.AddRange(new object[] {
             "Todas las citas",
-            "Agendadas",
+            "Pendientes",
             "Confirmadas",
             "Completadas",
             "Canceladas"});
-            this.comboBoxCitas.Location = new System.Drawing.Point(510, 39);
-            this.comboBoxCitas.Name = "comboBoxCitas";
-            this.comboBoxCitas.Size = new System.Drawing.Size(122, 26);
-            this.comboBoxCitas.TabIndex = 39;
+            this.comboBoxFiltroCitas.Location = new System.Drawing.Point(510, 39);
+            this.comboBoxFiltroCitas.Name = "comboBoxFiltroCitas";
+            this.comboBoxFiltroCitas.Size = new System.Drawing.Size(122, 26);
+            this.comboBoxFiltroCitas.TabIndex = 39;
+            this.comboBoxFiltroCitas.SelectedIndexChanged += new System.EventHandler(this.comboBoxFiltroCitas_SelectedIndexChanged);
             // 
             // BtnVerReportes
             // 
@@ -208,6 +212,7 @@
             // 
             this.panelGestionUsuarios.Controls.Add(this.btnEliminarCita);
             this.panelGestionUsuarios.Controls.Add(this.btnEditarCita);
+            this.panelGestionUsuarios.Controls.Add(this.panelCrearCita);
             this.panelGestionUsuarios.Controls.Add(this.lblCitasConfirmadas);
             this.panelGestionUsuarios.Controls.Add(this.lblCitasCompletadas);
             this.panelGestionUsuarios.Controls.Add(this.lblCitasPendientes);
@@ -217,11 +222,11 @@
             this.panelGestionUsuarios.Controls.Add(this.btnMostrarTodos);
             this.panelGestionUsuarios.Controls.Add(this.btnNuevaCita);
             this.panelGestionUsuarios.Controls.Add(this.imagenFiltro);
-            this.panelGestionUsuarios.Controls.Add(this.comboBoxCitas);
+            this.panelGestionUsuarios.Controls.Add(this.comboBoxFiltroCitas);
             this.panelGestionUsuarios.Controls.Add(this.BtnVerReportes);
             this.panelGestionUsuarios.Controls.Add(this.pictureBox1);
             this.panelGestionUsuarios.Controls.Add(this.label2);
-            this.panelGestionUsuarios.Location = new System.Drawing.Point(43, 181);
+            this.panelGestionUsuarios.Location = new System.Drawing.Point(54, 233);
             this.panelGestionUsuarios.Name = "panelGestionUsuarios";
             this.panelGestionUsuarios.Size = new System.Drawing.Size(814, 451);
             this.panelGestionUsuarios.TabIndex = 52;
@@ -237,6 +242,7 @@
             this.btnEliminarCita.TabIndex = 59;
             this.btnEliminarCita.Text = "Eliminar Cita";
             this.btnEliminarCita.UseVisualStyleBackColor = false;
+            this.btnEliminarCita.Click += new System.EventHandler(this.btnEliminarCita_Click);
             // 
             // btnEditarCita
             // 
@@ -250,6 +256,13 @@
             this.btnEditarCita.Text = "Editar Cita";
             this.btnEditarCita.UseVisualStyleBackColor = false;
             this.btnEditarCita.Click += new System.EventHandler(this.btnEditarCita_Click);
+            // 
+            // panelCrearCita
+            // 
+            this.panelCrearCita.Location = new System.Drawing.Point(130, 2);
+            this.panelCrearCita.Name = "panelCrearCita";
+            this.panelCrearCita.Size = new System.Drawing.Size(565, 624);
+            this.panelCrearCita.TabIndex = 53;
             // 
             // lblCitasConfirmadas
             // 
@@ -303,12 +316,28 @@
             this.datagridGestion.Size = new System.Drawing.Size(704, 253);
             this.datagridGestion.TabIndex = 52;
             // 
-            // panelCrearCita
+            // button1
             // 
-            this.panelCrearCita.Location = new System.Drawing.Point(184, 34);
-            this.panelCrearCita.Name = "panelCrearCita";
-            this.panelCrearCita.Size = new System.Drawing.Size(565, 624);
-            this.panelCrearCita.TabIndex = 53;
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(433, 176);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 54;
+            this.button1.Text = "Usuarios";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(402, 154);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(136, 19);
+            this.label3.TabIndex = 55;
+            this.label3.Text = "Gestionar Usuarios";
             // 
             // FrmAdmin
             // 
@@ -319,7 +348,8 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(901, 670);
             this.ControlBox = false;
-            this.Controls.Add(this.panelCrearCita);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.panelGestionUsuarios);
             this.Controls.Add(this.PanelCerrarSAd);
             this.Controls.Add(this.label12);
@@ -352,7 +382,7 @@
         private System.Windows.Forms.Button btnMostrarTodos;
         private System.Windows.Forms.Button btnNuevaCita;
         private System.Windows.Forms.PictureBox imagenFiltro;
-        private System.Windows.Forms.ComboBox comboBoxCitas;
+        private System.Windows.Forms.ComboBox comboBoxFiltroCitas;
         private System.Windows.Forms.Button BtnVerReportes;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
@@ -366,5 +396,7 @@
         private System.Windows.Forms.Button btnEliminarCita;
         private System.Windows.Forms.Button btnEditarCita;
         private System.Windows.Forms.Panel panelCrearCita;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label3;
     }
 }
