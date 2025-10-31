@@ -22,6 +22,7 @@ namespace Veterinaria
 
         private readonly Usuarios _usuarioActual; // Usuario logueado
         private readonly IMongoCollection<Mascota> _mascotaCollection;
+        private readonly IMongoCollection<Citas> _citasCollection; // colección de citas
 
         // AGREGAR variable para controlar cita seleccionada
         private string _citaSeleccionadaId = null;
@@ -40,6 +41,7 @@ namespace Veterinaria
                 if (database != null)
                 {
                     _mascotaCollection = database.GetCollection<Mascota>("Mascota");
+                    _citasCollection = database.GetCollection<Citas>("Citas");
                 }
 
                 ConfigurarDataGrid();
@@ -49,12 +51,83 @@ namespace Veterinaria
 
                 // Cargar las mascotas del usuario al iniciar
                 CargarMascotasUsuario();
+                // Cargar las citas del usuario al iniciar
+                CargarCitasUsuario();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al inicializar el formulario: {ex.Message}", "Error",
                               MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
+            }
+        }
+
+        // Carga las citas del usuario logueado y las muestra en el DataGridView llamado "dataGridViewcitas"
+        private void CargarCitasUsuario()
+        {
+            try
+            {
+                // Verificar colección y usuario
+                if (_citasCollection == null || _usuarioActual == null)
+                {
+                    if (this.Controls.ContainsKey("dataGridViewcitas"))
+                    {
+                        var dgv = this.Controls.Find("dataGridViewcitas", true).FirstOrDefault() as DataGridView;
+                        if (dgv != null)
+                        {
+                            dgv.DataSource = null;
+                            dgv.Visible = false;
+                        }
+                    }
+                    return;
+                }
+
+                // Obtener citas por documento de usuario
+                var citas = _citasCollection.Find(c => c.UsuarioDocumento == _usuarioActual.NumeroDocumento).ToList();
+
+                var grid = this.Controls.Find("dataGridViewcitas", true).FirstOrDefault() as DataGridView;
+                if (grid == null)
+                    return; // si no existe el control, salir silenciosamente
+
+                if (citas == null || citas.Count == 0)
+                {
+                    grid.DataSource = null;
+                    grid.Visible = true;
+                    // Opcional: mostrar fila con mensaje -- aquí dejamos vacío
+                }
+                else
+                {
+                    grid.Visible = true;
+                    grid.DataSource = citas;
+
+                    // Ocultar campos internos si existen
+                    if (grid.Columns.Contains("_id"))
+                        grid.Columns["_id"].Visible = false;
+                    if (grid.Columns.Contains("UsuarioDocumento"))
+                        grid.Columns["UsuarioDocumento"].Visible = false;
+                    if (grid.Columns.Contains("FechaCreacion"))
+                        grid.Columns["FechaCreacion"].Visible = false;
+
+                    // Renombrar encabezados
+                    if (grid.Columns.Contains("MascotaNombre"))
+                        grid.Columns["MascotaNombre"].HeaderText = "Mascota";
+                    if (grid.Columns.Contains("ServicioCita"))
+                        grid.Columns["ServicioCita"].HeaderText = "Servicio";
+                    if (grid.Columns.Contains("FechaCita"))
+                        grid.Columns["FechaCita"].HeaderText = "Fecha";
+                    if (grid.Columns.Contains("HoraCita"))
+                        grid.Columns["HoraCita"].HeaderText = "Hora";
+                    if (grid.Columns.Contains("EstadoCita"))
+                        grid.Columns["EstadoCita"].HeaderText = "Estado";
+                    if (grid.Columns.Contains("NotasCita"))
+                        grid.Columns["NotasCita"].HeaderText = "Notas";
+
+                    grid.ClearSelection();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar citas: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -474,7 +547,39 @@ namespace Veterinaria
         // Agregado para cumplir el evento enlazado en el Designer
         private void btn_agendar_citas_Click(object sender, EventArgs e)
         {
-            // Método vacío: el comportamiento original puede definirse aquí si es necesario.
+            // Mostrar el UserControl para agendar citas dentro del panelRegMascota
+            panelRegMascota.Controls.Clear();
+
+            var agencitas = new UserControl1();
+            agencitas.Dock = DockStyle.Fill;
+
+            // Cuando termine la creación de la cita, ocultar el panel y recargar las citas del usuario
+            agencitas.OnEdicionTerminada += (s, ev) =>
+            {
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        panelRegMascota.Visible = false;
+                        CargarCitasUsuario();
+                    }));
+                }
+                else
+                {
+                    panelRegMascota.Visible = false;
+                    CargarCitasUsuario();
+                }
+            };
+
+            panelRegMascota.Controls.Add(agencitas);
+            panelRegMascota.Visible = true;
         }
+
+        // Event handler requerido por el Designer (DataGridView llamado "dataGridViewcitas")
+        private void dataGridViewcitas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Se puede usar para manejar clicks sobre celdas de las citas; por ahora no hace nada.
+        }
+
     }
 }

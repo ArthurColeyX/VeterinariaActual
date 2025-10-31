@@ -48,7 +48,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelRegMascota = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.Panel_agendar = new System.Windows.Forms.Panel();
+            this.dataGridViewcitas = new System.Windows.Forms.DataGridView();
             this.btn_agendar_citas = new System.Windows.Forms.Button();
             this.PanelCerrarSAd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogAdpictBox)).BeginInit();
@@ -57,7 +58,8 @@
             this.panelnohaymascotas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel2.SuspendLayout();
+            this.Panel_agendar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewcitas)).BeginInit();
             this.SuspendLayout();
             // 
             // PanelCerrarSAd
@@ -282,13 +284,23 @@
             this.panelRegMascota.TabIndex = 26;
             this.panelRegMascota.Visible = false;
             // 
-            // panel2
+            // Panel_agendar
             // 
-            this.panel2.Controls.Add(this.btn_agendar_citas);
-            this.panel2.Location = new System.Drawing.Point(54, 706);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1192, 205);
-            this.panel2.TabIndex = 27;
+            this.Panel_agendar.Controls.Add(this.dataGridViewcitas);
+            this.Panel_agendar.Controls.Add(this.btn_agendar_citas);
+            this.Panel_agendar.Location = new System.Drawing.Point(54, 706);
+            this.Panel_agendar.Name = "Panel_agendar";
+            this.Panel_agendar.Size = new System.Drawing.Size(1192, 427);
+            this.Panel_agendar.TabIndex = 27;
+            // 
+            // dataGridViewcitas
+            // 
+            this.dataGridViewcitas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewcitas.Location = new System.Drawing.Point(33, 113);
+            this.dataGridViewcitas.Name = "dataGridViewcitas";
+            this.dataGridViewcitas.Size = new System.Drawing.Size(1121, 302);
+            this.dataGridViewcitas.TabIndex = 1;
+            this.dataGridViewcitas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewcitas_CellContentClick);
             // 
             // btn_agendar_citas
             // 
@@ -313,7 +325,7 @@
             this.Controls.Add(this.panelRegMascota);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanelCerrarSAd);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.Panel_agendar);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -330,7 +342,8 @@
             this.panelnohaymascotas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel2.ResumeLayout(false);
+            this.Panel_agendar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewcitas)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -356,7 +369,8 @@
         private System.Windows.Forms.DataGridView data_grid_mascotas;
         private System.Windows.Forms.Button btn_editar;
         private System.Windows.Forms.Button btn_eliminar;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel Panel_agendar;
         private System.Windows.Forms.Button btn_agendar_citas;
+        private System.Windows.Forms.DataGridView dataGridViewcitas;
     }
 }
