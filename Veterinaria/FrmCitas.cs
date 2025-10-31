@@ -14,7 +14,6 @@ namespace Veterinaria
 {
     public partial class FrmCitas : Form
     {
- 
 
         // Horario de atención (puedes ajustarlo)
         private readonly TimeSpan _horaInicio = new TimeSpan(6, 0, 0); // 6:00 AM
@@ -22,6 +21,7 @@ namespace Veterinaria
         private readonly TimeSpan _intervalo = new TimeSpan(0, 30, 0);  // 30 minuros
 
         private readonly Usuarios _usuarioActual; // Usuario logueado
+        private readonly IMongoCollection<Mascota> _mascotaCollection;
 
         // AGREGAR variable para controlar cita seleccionada
         private string _citaSeleccionadaId = null;
@@ -36,10 +36,19 @@ namespace Veterinaria
 
                 _usuarioActual = usuario;
 
-                ConfigurarDataGrid();
-                
+                // inicializar colección de mascotas
+                if (database != null)
+                {
+                    _mascotaCollection = database.GetCollection<Mascota>("Mascota");
+                }
 
+                ConfigurarDataGrid();
+
+                // Suscribir eventos
                 data_grid_mascotas.SelectionChanged += dgvCitas_SelectionChanged;
+
+                // Cargar las mascotas del usuario al iniciar
+                CargarMascotasUsuario();
             }
             catch (Exception ex)
             {
@@ -115,6 +124,65 @@ namespace Veterinaria
             };
         }
 
+        // Carga las mascotas del usuario logueado y actualiza la UI
+        private void CargarMascotasUsuario()
+        {
+            try
+            {
+                if (_mascotaCollection == null || _usuarioActual == null)
+                {
+                    // Si no hay conexión o usuario, mostrar panel "no hay mascotas" y ocultar grid
+                    panelnohaymascotas.Visible = true;
+                    data_grid_mascotas.Visible = false;
+                    return;
+                }
+
+                var mascotas = _mascotaCollection.Find(m => m.NumeroDocumentoDueño == _usuarioActual.NumeroDocumento).ToList();
+
+                if (mascotas == null || mascotas.Count == 0)
+                {
+                    // No hay mascotas: mostrar panel informativo
+                    panelnohaymascotas.Visible = true;
+                    data_grid_mascotas.Visible = false;
+                    data_grid_mascotas.DataSource = null;
+                }
+                else
+                {
+                    // Hay mascotas: ocultar panel y mostrar grid
+                    panelnohaymascotas.Visible = false;
+                    data_grid_mascotas.Visible = true;
+
+                    // Vincular lista al grid
+                    data_grid_mascotas.DataSource = mascotas;
+
+                    // Ajustes de columnas: ocultar campos internos
+                    if (data_grid_mascotas.Columns.Contains("_id"))
+                        data_grid_mascotas.Columns["_id"].Visible = false;
+                    if (data_grid_mascotas.Columns.Contains("NumeroDocumentoDueño"))
+                        data_grid_mascotas.Columns["NumeroDocumentoDueño"].Visible = false;
+
+                    // Opcional: renombrar encabezados
+                    if (data_grid_mascotas.Columns.Contains("NombreMascota"))
+                        data_grid_mascotas.Columns["NombreMascota"].HeaderText = "Nombre";
+                    if (data_grid_mascotas.Columns.Contains("Especie"))
+                        data_grid_mascotas.Columns["Especie"].HeaderText = "Especie";
+                    if (data_grid_mascotas.Columns.Contains("Raza"))
+                        data_grid_mascotas.Columns["Raza"].HeaderText = "Raza";
+                    if (data_grid_mascotas.Columns.Contains("Edad"))
+                        data_grid_mascotas.Columns["Edad"].HeaderText = "Edad";
+                    if (data_grid_mascotas.Columns.Contains("Sexo"))
+                        data_grid_mascotas.Columns["Sexo"].HeaderText = "Sexo";
+                    if (data_grid_mascotas.Columns.Contains("Peso"))
+                        data_grid_mascotas.Columns["Peso"].HeaderText = "Peso";
+
+                    data_grid_mascotas.ClearSelection();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar mascotas: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         //private void ValidarFinDeSemana(object sender, EventArgs e)
         //{
@@ -239,21 +307,17 @@ namespace Veterinaria
 
         private void CargarHorasDisponibles(DateTime fecha)
         {
-           
+
         }
 
 
         private void FrmCitas_Load(object sender, EventArgs e)
         {
 
-           
-            
+
         }
 
-       
 
-      
-     
 
         private void dgvCitas_MouseClick(object sender, MouseEventArgs e)
         {
@@ -279,7 +343,7 @@ namespace Veterinaria
                 _citaSeleccionadaId = null;
             }
 
-           
+
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -298,14 +362,19 @@ namespace Veterinaria
                 // Ejecutar en el hilo de UI
                 if (this.InvokeRequired)
                 {
-                    this.Invoke(new Action(() => panelRegMascota.Visible = false));
+                    this.Invoke(new Action(() => {
+                        panelRegMascota.Visible = false;
+                        // recargar mascotas para mostrar la nueva
+                        CargarMascotasUsuario();
+                    }));
                 }
                 else
                 {
                     panelRegMascota.Visible = false;
+                    CargarMascotasUsuario();
                 }
             };
-            
+
             panelRegMascota.Controls.Add(mascotas);
             panelRegMascota.Visible = true;
         }

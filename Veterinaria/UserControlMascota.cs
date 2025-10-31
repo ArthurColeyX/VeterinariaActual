@@ -58,10 +58,11 @@ namespace Veterinaria
 
             string nombre = txt_nombre_mascota.Text.Trim();
             string especie = comboBoxespecie.Text.Trim();
+            string sexo = comboBoxsexo.Text.Trim();
             string raza = textBox3.Text.Trim();
             string edadText = textBox4.Text.Trim();
 
-            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(especie) || string.IsNullOrEmpty(raza) || string.IsNullOrEmpty(edadText))
+            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(especie) || string.IsNullOrEmpty(raza) || string.IsNullOrEmpty(edadText) || string.IsNullOrEmpty(sexo))
             {
                 MessageBox.Show("Por favor complete todos los campos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -82,8 +83,8 @@ namespace Veterinaria
                     Especie = especie,
                     Raza = raza,
                     Edad = edad,
-                    Sexo = null,
-                    Peso = 0
+                    Sexo = sexo,
+                    Peso =0
                 };
 
                 _mascotaCollection.InsertOne(nueva);
@@ -93,6 +94,7 @@ namespace Veterinaria
                 // Limpiar campos
                 txt_nombre_mascota.Clear();
                 comboBoxespecie.SelectedIndex = -1;
+                comboBoxsexo.SelectedIndex = -1;
                 textBox3.Clear();
                 textBox4.Clear();
 
@@ -106,6 +108,11 @@ namespace Veterinaria
             {
                 MessageBox.Show($"Error al guardar la mascota: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
