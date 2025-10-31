@@ -19,6 +19,12 @@ namespace Veterinaria
             _usuariosCollection = database.GetCollection<Usuarios>("Usuarios");
             _usuarioOriginal = usuarioSeleccionado;
 
+            // Validaciones
+            if (txtTelEditarU != null) txtTelEditarU.KeyPress += OnlyDigits_KeyPress;
+            if (txt_idEditar != null) txt_idEditar.KeyPress += OnlyDigits_KeyPress;
+            if (txtNombreEditarU != null) txtNombreEditarU.KeyPress += OnlyLetters_KeyPress;
+            if (txtApellidoEditarU != null) txtApellidoEditarU.KeyPress += OnlyLetters_KeyPress;
+
             CargarDatosUsuario();
         }
 
@@ -55,6 +61,13 @@ namespace Veterinaria
                     string.IsNullOrWhiteSpace(txtContraEditarU.Text))
                 {
                     MessageBox.Show("Por favor, completa todos los campos.", "Campos incompletos",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!ValidateEmail(txtCorreoEditarU.Text.Trim()))
+                {
+                    MessageBox.Show("Ingrese un correo electrónico válido.", "Validación",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -129,6 +142,13 @@ namespace Veterinaria
                     return;
                 }
 
+                if (!ValidateEmail(txtCorreoEditarU.Text.Trim()))
+                {
+                    MessageBox.Show("Ingrese un correo electrónico válido.", "Validación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 // 🚫 Validar duplicado de documento
                 var duplicado = _usuariosCollection.Find(u =>
                     u.NumeroDocumento == txt_idEditar.Text &&
@@ -188,6 +208,30 @@ namespace Veterinaria
                 OnUsuarioEditado?.Invoke(this, EventArgs.Empty);
                 this.Dispose();
             }
+        }
+
+        // ======= VALIDATORS =======
+        private void OnlyDigits_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void OnlyLetters_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != '-' && e.KeyChar != '\'')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private bool ValidateEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+            return email.Contains("@") && email.Contains(".");
         }
     }
 }

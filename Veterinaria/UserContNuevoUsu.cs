@@ -21,6 +21,12 @@ namespace Veterinaria
             InitializeComponent();
             var database = ConexionMongo.ObtenerConexion();
             _usuariosCollection = database.GetCollection<Usuarios>("Usuarios");
+
+            // Validaciones de entrada
+            if (txtTelCrearU != null) txtTelCrearU.KeyPress += OnlyDigits_KeyPress;
+            if (txt_id != null) txt_id.KeyPress += OnlyDigits_KeyPress;
+            if (txtNombreCrearU != null) txtNombreCrearU.KeyPress += OnlyLetters_KeyPress;
+            if (txtApellidoCrearU != null) txtApellidoCrearU.KeyPress += OnlyLetters_KeyPress;
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -41,6 +47,13 @@ namespace Veterinaria
                     ComBoxRolCrudNU.SelectedIndex == -1)
                 {
                     MessageBox.Show("⚠️ Todos los campos son obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Validar correo
+                if (!ValidateEmail(txtCorreoCrearU.Text.Trim()))
+                {
+                    MessageBox.Show("Ingrese un correo electrónico válido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -81,6 +94,31 @@ namespace Veterinaria
         {
             OnUsuarioCreado?.Invoke(this, EventArgs.Empty);
             this.Dispose();
+        }
+
+        // ======= VALIDATORS =======
+        private void OnlyDigits_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void OnlyLetters_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // permitir letras, control, espacio, guion y apostrofe
+            if (!char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != '-' && e.KeyChar != '\'')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private bool ValidateEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+            return email.Contains("@") && email.Contains(".");
         }
     }
 }

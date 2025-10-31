@@ -193,5 +193,11 @@ namespace Veterinaria
                 }
             }
         }
+
+        private void FrmCrudUsuarios_Activated(object sender, EventArgs e)
+        {
+            // Volver a cargar los usuarios al reactivar el formulario
+            CargarUsuarios();
+        }
     }
 }
