@@ -89,6 +89,7 @@
             this.CerrarSesionUsuario.TabIndex = 19;
             this.CerrarSesionUsuario.Text = "         Cerrar Sesion";
             this.CerrarSesionUsuario.UseVisualStyleBackColor = false;
+            this.CerrarSesionUsuario.Click += new System.EventHandler(this.CerrarSesionUsuario_Click);
             // 
             // label1
             // 

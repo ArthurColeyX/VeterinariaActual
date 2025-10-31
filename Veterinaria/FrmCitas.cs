@@ -427,7 +427,7 @@ namespace Veterinaria
         {
             if (data_grid_mascotas.Columns.Contains("_id") && data_grid_mascotas.SelectedRows.Count > 0)
             {
-                 var fila = data_grid_mascotas.SelectedRows[0];
+                var fila = data_grid_mascotas.SelectedRows[0];
                 _citaSeleccionadaId = fila.Cells["_id"].Value?.ToString();
             }
             else
@@ -454,7 +454,8 @@ namespace Veterinaria
                 // Ejecutar en el hilo de UI
                 if (this.InvokeRequired)
                 {
-                    this.Invoke(new Action(() => {
+                    this.Invoke(new Action(() =>
+                    {
                         panelRegMascota.Visible = false;
                         // recargar mascotas para mostrar la nueva
                         CargarMascotasUsuario();
@@ -465,7 +466,7 @@ namespace Veterinaria
                     panelRegMascota.Visible = false;
                     CargarMascotasUsuario();
                 }
-             };
+            };
 
             panelRegMascota.Controls.Add(mascotas);
             panelRegMascota.Visible = true;
@@ -474,7 +475,7 @@ namespace Veterinaria
         private void btn_editar_Click(object sender, EventArgs e)
         {
             // Verificar que hay una fila seleccionada
-            if (data_grid_mascotas.SelectedRows.Count ==0)
+            if (data_grid_mascotas.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Seleccione una mascota para editar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -581,5 +582,17 @@ namespace Veterinaria
             // Se puede usar para manejar clicks sobre celdas de las citas; por ahora no hace nada.
         }
 
+        private void CerrarSesionUsuario_Click(object sender, EventArgs e)
+        {
+            var confirmar = MessageBox.Show("¿Seguro que deseas cerrar sesión?",
+          "Cancelar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmar == DialogResult.Yes)
+            {
+                Form1 login = new Form1();
+                login.Show();
+                this.Hide();
+            }
+        }
     }
 }
