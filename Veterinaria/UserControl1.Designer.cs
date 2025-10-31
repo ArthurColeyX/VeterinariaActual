@@ -30,7 +30,6 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtNombreMascota = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxServicio = new System.Windows.Forms.ComboBox();
@@ -44,6 +43,7 @@
             this.txtNotas = new System.Windows.Forms.TextBox();
             this.Notas = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.comboBoxMascotas = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -67,13 +67,6 @@
             this.label3.Size = new System.Drawing.Size(326, 23);
             this.label3.TabIndex = 22;
             this.label3.Text = "Completa los datos para agendar una cita";
-            // 
-            // txtNombreMascota
-            // 
-            this.txtNombreMascota.Location = new System.Drawing.Point(281, 183);
-            this.txtNombreMascota.Name = "txtNombreMascota";
-            this.txtNombreMascota.Size = new System.Drawing.Size(159, 20);
-            this.txtNombreMascota.TabIndex = 34;
             // 
             // label7
             // 
@@ -189,6 +182,7 @@
             this.CrearCitaAdmi.TabIndex = 43;
             this.CrearCitaAdmi.Text = "Crear Cita";
             this.CrearCitaAdmi.UseVisualStyleBackColor = false;
+            this.CrearCitaAdmi.Click += new System.EventHandler(this.CrearCitaAdmi_Click);
             // 
             // comboBoxUsuarios
             // 
@@ -214,7 +208,6 @@
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(200, 20);
             this.dtpFecha.TabIndex = 45;
-            this.dtpFecha.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // txtNotas
             // 
@@ -245,10 +238,29 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
+            // comboBoxMascotas
+            // 
+            this.comboBoxMascotas.FormattingEnabled = true;
+            this.comboBoxMascotas.Items.AddRange(new object[] {
+            "🩺 Consulta General",
+            "",
+            "💉 Vacunación",
+            "",
+            "⚠️ Cirugía",
+            "",
+            "⚠️ Emergencia",
+            "",
+            "✂️ Groomig"});
+            this.comboBoxMascotas.Location = new System.Drawing.Point(281, 182);
+            this.comboBoxMascotas.Name = "comboBoxMascotas";
+            this.comboBoxMascotas.Size = new System.Drawing.Size(135, 21);
+            this.comboBoxMascotas.TabIndex = 49;
+            // 
             // UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.comboBoxMascotas);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.txtNotas);
             this.Controls.Add(this.Notas);
@@ -260,7 +272,6 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.comboBoxServicio);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.txtNombreMascota);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -277,7 +288,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtNombreMascota;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxServicio;
@@ -291,5 +301,6 @@
         private System.Windows.Forms.TextBox txtNotas;
         private System.Windows.Forms.Label Notas;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.ComboBox comboBoxMascotas;
     }
 }

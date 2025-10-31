@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Veterinaria
 {
-    class Mascota
+    public class Mascota
     {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
