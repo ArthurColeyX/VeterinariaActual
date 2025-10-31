@@ -136,62 +136,88 @@ namespace Veterinaria
         // ================== BOTÓN CREAR CITA ==================
         private void CrearCitaAdmi_Click(object sender, EventArgs e)
         {
-            comboBoxMascotas.DataSource = null;
-            comboBoxMascotas.Enabled = false;
-
+            // Validar usuario
             if (comboBoxUsuarios.SelectedItem == null)
+            {
+                MessageBox.Show("Seleccione un dueño.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+
+            // Validar mascota
+            if (comboBoxMascotas.SelectedValue == null)
+            {
+                MessageBox.Show("Seleccione una mascota.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validar servicio
+            if (string.IsNullOrEmpty(comboBoxServicio.Text.Trim()))
+            {
+                MessageBox.Show("Seleccione un servicio.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DateTime fechaSeleccionada = dtpFecha.Value.Date;
+            DateTime horaSeleccionada = dtpFecha.Value;
+            DateTime ahora = DateTime.Now;
+
+            // Validar hora si la fecha es hoy
+            if (fechaSeleccionada == ahora.Date && horaSeleccionada.TimeOfDay < ahora.TimeOfDay)
+            {
+                MessageBox.Show("No puede seleccionar una hora pasada para hoy.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             try
             {
+                // Obtener usuario seleccionado
                 Usuarios usuarioSeleccionado = comboBoxUsuarios.SelectedItem as Usuarios;
-                if (usuarioSeleccionado == null)
+
+                // Validar cruce de citas
+                var citaExistente = _citasCollection.Find(c =>
+                    c.MascotaNombre == comboBoxMascotas.Text &&
+                    c.FechaCita == fechaSeleccionada.ToString("yyyy-MM-dd") &&
+                    c.HoraCita == horaSeleccionada.ToString("hh:mm tt")
+                ).FirstOrDefault();
+
+                if (citaExistente != null)
                 {
-                    MessageBox.Show("No se pudo obtener el usuario seleccionado.");
+                    MessageBox.Show("Ya existe una cita para esta mascota en la fecha y hora seleccionadas.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                string numeroDocumento = usuarioSeleccionado.NumeroDocumento;
-                Console.WriteLine($"Buscando mascotas para el número de documento: '{numeroDocumento}'");
-
-                // ================== FILTRO SIMPLE Y FUNCIONAL ==================
-                // Comparación exacta (case-insensitive con regex)
-                var filter = Builders<Mascota>.Filter.Regex(
-                    m => m.NumeroDocumentoDueño,
-                    new MongoDB.Bson.BsonRegularExpression($"^{numeroDocumento}$", "i")
-                );
-
-                var mascotas = _mascotasCollection.Find(filter).ToList();
-
-                // ================== DEPURACIÓN ==================
-                var todasMascotas = _mascotasCollection.Find(FilterDefinition<Mascota>.Empty).ToList();
-                Console.WriteLine("=== TODAS LAS MASCOTAS EN BD ===");
-                foreach (var m in todasMascotas)
+                // Crear la nueva cita
+                Citas nuevaCita = new Citas
                 {
-                    Console.WriteLine($"Mascota: '{m.NombreMascota}', Dueño: '{m.NumeroDocumentoDueño}'");
-                }
-                Console.WriteLine("================================");
+                    UsuarioDocumento = usuarioSeleccionado.NumeroDocumento,
+                    MascotaNombre = comboBoxMascotas.Text,
+                    FechaCita = fechaSeleccionada.ToString("yyyy-MM-dd"),
+                    HoraCita = horaSeleccionada.ToString("hh:mm tt"),
+                    ServicioCita = comboBoxServicio.SelectedItem.ToString(),
+                    NotasCita = txtNotas.Text.Trim(),
+                    FechaCreacion = DateTime.Now
+                };
 
-                Console.WriteLine($"Mascotas encontradas: {mascotas.Count}");
+                // Insertar en MongoDB
+                _citasCollection.InsertOne(nuevaCita);
 
-                if (mascotas.Count == 0)
-                {
-                    MessageBox.Show("Este usuario no tiene mascotas registradas.", "Información",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    comboBoxMascotas.DisplayMember = "NombreMascota";
-                    comboBoxMascotas.ValueMember = "_id";
-                    comboBoxMascotas.DataSource = mascotas;
-                    comboBoxMascotas.SelectedIndex = -1;
-                    comboBoxMascotas.Enabled = true;
-                }
+                MessageBox.Show("✅ Cita registrada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Limpiar campos
+                comboBoxUsuarios.SelectedIndex = -1;
+                comboBoxMascotas.DataSource = null;
+                comboBoxMascotas.Enabled = false;
+                comboBoxServicio.SelectedIndex = -1;
+                dtpFecha.Value = DateTime.Now;
+                txtNotas.Clear();
+
+                // Notificar al contenedor del UserControl
+                OnEdicionTerminada?.Invoke(this, EventArgs.Empty);
+                this.Dispose();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar mascotas: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al guardar la cita: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
