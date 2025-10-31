@@ -34,7 +34,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxServicio = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.comboBoxHora = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.CrearCitaAdmi = new System.Windows.Forms.Button();
@@ -44,6 +43,7 @@
             this.Notas = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.comboBoxMascotas = new System.Windows.Forms.ComboBox();
+            this.dtpHora = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // label1
@@ -92,6 +92,7 @@
             // 
             // comboBoxServicio
             // 
+            this.comboBoxServicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxServicio.FormattingEnabled = true;
             this.comboBoxServicio.Items.AddRange(new object[] {
             "🩺 Consulta General",
@@ -118,36 +119,6 @@
             this.label8.Size = new System.Drawing.Size(63, 19);
             this.label8.TabIndex = 37;
             this.label8.Text = "Servicio";
-            // 
-            // comboBoxHora
-            // 
-            this.comboBoxHora.FormattingEnabled = true;
-            this.comboBoxHora.Items.AddRange(new object[] {
-            "8:00",
-            "8:30",
-            "9:00",
-            "9:30",
-            "10:00",
-            "10:30",
-            "11:00",
-            "11:30",
-            "12:00",
-            "12:30",
-            "13:00",
-            "13:30",
-            "14:00",
-            "14:30",
-            "15:00",
-            "15:30",
-            "16:00",
-            "16:30",
-            "17:00",
-            "17:30",
-            "18:00"});
-            this.comboBoxHora.Location = new System.Drawing.Point(50, 421);
-            this.comboBoxHora.Name = "comboBoxHora";
-            this.comboBoxHora.Size = new System.Drawing.Size(135, 21);
-            this.comboBoxHora.TabIndex = 40;
             // 
             // label9
             // 
@@ -186,6 +157,7 @@
             // 
             // comboBoxUsuarios
             // 
+            this.comboBoxUsuarios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxUsuarios.FormattingEnabled = true;
             this.comboBoxUsuarios.Items.AddRange(new object[] {
             "🩺 Consulta General",
@@ -204,6 +176,7 @@
             // 
             // dtpFecha
             // 
+            this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFecha.Location = new System.Drawing.Point(281, 301);
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(200, 20);
@@ -240,6 +213,7 @@
             // 
             // comboBoxMascotas
             // 
+            this.comboBoxMascotas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxMascotas.FormattingEnabled = true;
             this.comboBoxMascotas.Items.AddRange(new object[] {
             "🩺 Consulta General",
@@ -256,10 +230,22 @@
             this.comboBoxMascotas.Size = new System.Drawing.Size(135, 21);
             this.comboBoxMascotas.TabIndex = 49;
             // 
+            // dtpHora
+            // 
+            this.dtpHora.CustomFormat = "hh:mm tt";
+            this.dtpHora.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpHora.Location = new System.Drawing.Point(50, 419);
+            this.dtpHora.Name = "dtpHora";
+            this.dtpHora.ShowUpDown = true;
+            this.dtpHora.Size = new System.Drawing.Size(135, 20);
+            this.dtpHora.TabIndex = 50;
+         
+            // 
             // UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dtpHora);
             this.Controls.Add(this.comboBoxMascotas);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.txtNotas);
@@ -268,7 +254,6 @@
             this.Controls.Add(this.comboBoxUsuarios);
             this.Controls.Add(this.CrearCitaAdmi);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.comboBoxHora);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.comboBoxServicio);
             this.Controls.Add(this.label8);
@@ -292,7 +277,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxServicio;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox comboBoxHora;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button CrearCitaAdmi;
@@ -302,5 +286,6 @@
         private System.Windows.Forms.Label Notas;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ComboBox comboBoxMascotas;
+        private System.Windows.Forms.DateTimePicker dtpHora;
     }
 }
