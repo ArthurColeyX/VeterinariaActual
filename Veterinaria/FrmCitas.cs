@@ -392,10 +392,89 @@ namespace Veterinaria
                     panelRegMascota.Visible = false;
                     CargarMascotasUsuario();
                 }
-            };
+             };
 
             panelRegMascota.Controls.Add(mascotas);
             panelRegMascota.Visible = true;
+        }
+
+        private void btn_editar_Click(object sender, EventArgs e)
+        {
+            // Verificar que hay una fila seleccionada
+            if (data_grid_mascotas.SelectedRows.Count ==0)
+            {
+                MessageBox.Show("Seleccione una mascota para editar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (_mascotaCollection == null)
+            {
+                MessageBox.Show("No hay conexión a la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var fila = data_grid_mascotas.SelectedRows[0];
+
+            if (!data_grid_mascotas.Columns.Contains("_id"))
+            {
+                MessageBox.Show("La columna de identificador no existe en la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int colIndex = data_grid_mascotas.Columns["_id"].Index;
+            var id = fila.Cells[colIndex].Value?.ToString();
+
+            if (string.IsNullOrEmpty(id))
+            {
+                MessageBox.Show("No se pudo obtener el identificador de la mascota seleccionada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                var mascota = _mascotaCollection.Find(m => m._id == id).FirstOrDefault();
+                if (mascota == null)
+                {
+                    MessageBox.Show("No se encontró la mascota seleccionada en la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Limpiar controles previos y mostrar el UserControl de edición
+                panelRegMascota.Controls.Clear();
+                UserControleditar_mascota editarMas = new UserControleditar_mascota(mascota);
+
+                // Suscribir al evento para recargar la lista cuando se actualice
+                editarMas.MascotaActualizada += (s, ev) =>
+                {
+                    if (this.InvokeRequired)
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            panelRegMascota.Visible = false;
+                            CargarMascotasUsuario();
+                        }));
+                    }
+                    else
+                    {
+                        panelRegMascota.Visible = false;
+                        CargarMascotasUsuario();
+                    }
+                };
+
+                editarMas.Dock = DockStyle.Fill;
+                panelRegMascota.Controls.Add(editarMas);
+                panelRegMascota.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar la mascota para edición: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Agregado para cumplir el evento enlazado en el Designer
+        private void btn_agendar_citas_Click(object sender, EventArgs e)
+        {
+            // Método vacío: el comportamiento original puede definirse aquí si es necesario.
         }
     }
 }

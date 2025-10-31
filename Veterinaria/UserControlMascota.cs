@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Veterinaria
 {
@@ -61,6 +62,7 @@ namespace Veterinaria
             string sexo = comboBoxsexo.Text.Trim();
             string raza = textBox3.Text.Trim();
             string edadText = textBox4.Text.Trim();
+            string pesoText = txt_peso.Text.Trim();
 
             if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(especie) || string.IsNullOrEmpty(raza) || string.IsNullOrEmpty(edadText) || string.IsNullOrEmpty(sexo))
             {
@@ -74,6 +76,18 @@ namespace Veterinaria
                 return;
             }
 
+            double peso =0;
+            if (!string.IsNullOrEmpty(pesoText))
+            {
+                // Intentar parsear usando la cultura actual y la invariante para aceptar "." o ","
+                if (!double.TryParse(pesoText, NumberStyles.Float, CultureInfo.CurrentCulture, out peso) &&
+                    !double.TryParse(pesoText, NumberStyles.Float, CultureInfo.InvariantCulture, out peso))
+                {
+                    MessageBox.Show("Peso inválido. Ingrese un número (use \".\" o \"," + " según su configuración).", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             try
             {
                 Mascota nueva = new Mascota
@@ -84,7 +98,7 @@ namespace Veterinaria
                     Raza = raza,
                     Edad = edad,
                     Sexo = sexo,
-                    Peso =0
+                    Peso = peso
                 };
 
                 _mascotaCollection.InsertOne(nueva);
@@ -97,6 +111,7 @@ namespace Veterinaria
                 comboBoxsexo.SelectedIndex = -1;
                 textBox3.Clear();
                 textBox4.Clear();
+                txt_peso.Clear();
 
                 // Disparar evento para que el formulario padre oculte el panel
                 MascotaRegistrada?.Invoke(this, EventArgs.Empty);

@@ -199,6 +199,12 @@
     <Compile Include="UserControlEditarCita.Designer.cs">
       <DependentUpon>UserControlEditarCita.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControleditar_mascota.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControleditar_mascota.Designer.cs">
+      <DependentUpon>UserControleditar_mascota.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlMascota.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -233,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlEditarCita.resx">
       <DependentUpon>UserControlEditarCita.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControleditar_mascota.resx">
+      <DependentUpon>UserControleditar_mascota.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlMascota.resx">
       <DependentUpon>UserControlMascota.cs</DependentUpon>
