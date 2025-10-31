@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txt_nombre_mascota = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -36,13 +37,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btn_registar_mascota = new System.Windows.Forms.Button();
-            this.txt_nombre_mascota = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.comboBoxespecie = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.comboBoxsexo = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -58,6 +60,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(547, 49);
             this.panel1.TabIndex = 0;
+            // 
+            // txt_nombre_mascota
+            // 
+            this.txt_nombre_mascota.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(245)))));
+            this.txt_nombre_mascota.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_nombre_mascota.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_nombre_mascota.Location = new System.Drawing.Point(12, 13);
+            this.txt_nombre_mascota.Name = "txt_nombre_mascota";
+            this.txt_nombre_mascota.Size = new System.Drawing.Size(520, 22);
+            this.txt_nombre_mascota.TabIndex = 0;
             // 
             // label1
             // 
@@ -98,7 +110,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(43, 280);
+            this.label4.Location = new System.Drawing.Point(49, 257);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 18);
             this.label4.TabIndex = 5;
@@ -138,6 +150,16 @@
             this.panel3.Size = new System.Drawing.Size(547, 49);
             this.panel3.TabIndex = 6;
             // 
+            // textBox3
+            // 
+            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(245)))));
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(12, 14);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(520, 22);
+            this.textBox3.TabIndex = 2;
+            // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.Transparent;
@@ -148,6 +170,16 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(547, 49);
             this.panel4.TabIndex = 7;
+            // 
+            // textBox4
+            // 
+            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(245)))));
+            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox4.Location = new System.Drawing.Point(14, 14);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(520, 22);
+            this.textBox4.TabIndex = 3;
             // 
             // label7
             // 
@@ -174,36 +206,6 @@
             this.btn_registar_mascota.UseVisualStyleBackColor = true;
             this.btn_registar_mascota.Click += new System.EventHandler(this.btn_registar_mascota_Click);
             // 
-            // txt_nombre_mascota
-            // 
-            this.txt_nombre_mascota.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(245)))));
-            this.txt_nombre_mascota.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_nombre_mascota.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_nombre_mascota.Location = new System.Drawing.Point(12, 13);
-            this.txt_nombre_mascota.Name = "txt_nombre_mascota";
-            this.txt_nombre_mascota.Size = new System.Drawing.Size(520, 22);
-            this.txt_nombre_mascota.TabIndex = 0;
-            // 
-            // textBox3
-            // 
-            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(245)))));
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(12, 14);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(520, 22);
-            this.textBox3.TabIndex = 2;
-            // 
-            // textBox4
-            // 
-            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(245)))));
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(14, 14);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(520, 22);
-            this.textBox4.TabIndex = 3;
-            // 
             // comboBoxespecie
             // 
             this.comboBoxespecie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(245)))));
@@ -215,10 +217,34 @@
             "Conejo",
             "Háster",
             "Reptil"});
-            this.comboBoxespecie.Location = new System.Drawing.Point(46, 317);
+            this.comboBoxespecie.Location = new System.Drawing.Point(52, 294);
             this.comboBoxespecie.Name = "comboBoxespecie";
             this.comboBoxespecie.Size = new System.Drawing.Size(535, 21);
             this.comboBoxespecie.TabIndex = 10;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(43, 322);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(44, 18);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "Sexo";
+            // 
+            // comboBoxsexo
+            // 
+            this.comboBoxsexo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(243)))), ((int)(((byte)(245)))));
+            this.comboBoxsexo.FormattingEnabled = true;
+            this.comboBoxsexo.Items.AddRange(new object[] {
+            "Masculino",
+            "Femenino"});
+            this.comboBoxsexo.Location = new System.Drawing.Point(43, 343);
+            this.comboBoxsexo.Name = "comboBoxsexo";
+            this.comboBoxsexo.Size = new System.Drawing.Size(535, 21);
+            this.comboBoxsexo.TabIndex = 13;
+            this.comboBoxsexo.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // UserControlMascota
             // 
@@ -226,6 +252,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Veterinaria.Properties.Resources.Cuadro_en_balnco1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.comboBoxsexo);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.comboBoxespecie);
             this.Controls.Add(this.btn_registar_mascota);
             this.Controls.Add(this.label7);
@@ -269,5 +297,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.ComboBox comboBoxespecie;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox comboBoxsexo;
     }
 }
