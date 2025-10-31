@@ -1,33 +1,43 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Veterinaria
 {
     public partial class UserControl1 : UserControl
     {
-
         private readonly IMongoCollection<Citas> _citasCollection;
         private readonly IMongoCollection<Usuarios> _usuariosCollection;
+        private readonly IMongoCollection<Mascota> _mascotasCollection;
+
+        public event EventHandler OnEdicionTerminada;
 
         public UserControl1()
         {
             InitializeComponent();
+
             var db = ConexionMongo.ObtenerConexion();
             _citasCollection = db.GetCollection<Citas>("Citas");
             _usuariosCollection = db.GetCollection<Usuarios>("Usuarios");
+            _mascotasCollection = db.GetCollection<Mascota>("Mascota");
+
+            dtpFecha.MinDate = DateTime.Today;
+            comboBoxMascotas.Enabled = false;
 
             CargarUsuarios();
+            CargarServicios();
+
+            comboBoxUsuarios.SelectedIndexChanged += comboBoxUsuarios_SelectedIndexChanged;
         }
 
+        private void UserControl1_Load(object sender, EventArgs e) {
+            
+            }
+        
 
+        // ================== CARGAR USUARIOS ==================
         private void CargarUsuarios()
         {
             try
@@ -36,21 +46,80 @@ namespace Veterinaria
                     .Find(u => u.RolUsuario != "Administrador")
                     .ToList();
 
-                comboBoxUsuarios.DisplayMember = "NombreUsuario";
-                comboBoxUsuarios.ValueMember = "_id";
+                comboBoxUsuarios.DisplayMember = "NombreUsuario"; // Mostrar nombre
                 comboBoxUsuarios.DataSource = usuarios;
+                comboBoxUsuarios.SelectedIndex = -1;
+
+                Console.WriteLine("Usuarios cargados:");
+                foreach (var u in usuarios)
+                    Console.WriteLine($"Nombre: '{u.NombreUsuario}', NúmeroDocumento: '{u.NumeroDocumento}'");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar usuarios: {ex.Message}",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar usuarios: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        // ================== CARGAR MASCOTAS DEL USUARIO ==================
+        private void comboBoxUsuarios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxMascotas.DataSource = null;
+            comboBoxMascotas.Enabled = false;
+
+            if (comboBoxUsuarios.SelectedItem == null)
+                return;
+
+            try
+            {
+                Usuarios usuarioSeleccionado = comboBoxUsuarios.SelectedItem as Usuarios;
+                if (usuarioSeleccionado == null)
+                    return;
+
+                // ---------------- DEPURACIÓN: MOSTRAR TODAS LAS MASCOTAS ----------------
+                var todasMascotas = _mascotasCollection.Find(FilterDefinition<Mascota>.Empty).ToList();
+                Console.WriteLine("=== TODAS LAS MASCOTAS EN BD ===");
+                foreach (var m in todasMascotas)
+                {
+                    string dueño = m.NumeroDocumentoDueño ?? "(null)";
+                    Console.WriteLine($"Mascota: '{m.NombreMascota}', Dueño: '{dueño}' (Tipo: {m.NumeroDocumentoDueño?.GetType()})");
+                }
+                Console.WriteLine("================================");
+
+                string numeroDocumento = usuarioSeleccionado.NumeroDocumento?.Trim();
+                if (string.IsNullOrEmpty(numeroDocumento))
+                    return;
+
+                Console.WriteLine($"Buscando mascotas para el número de documento: '{numeroDocumento}'");
+
+                var filter = Builders<Mascota>.Filter.Eq("numeroDocumentoDueño", numeroDocumento);
+                var mascotas = _mascotasCollection.Find(filter).ToList();
+
+                Console.WriteLine($"Mascotas encontradas: {mascotas.Count}");
+
+                if (mascotas.Count == 0)
+                {
+                    MessageBox.Show("Este usuario no tiene mascotas registradas.", "Información",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                comboBoxMascotas.DisplayMember = "NombreMascota";
+                comboBoxMascotas.ValueMember = "_id";
+                comboBoxMascotas.DataSource = mascotas;
+                comboBoxMascotas.SelectedIndex = -1;
+                comboBoxMascotas.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar mascotas: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ================== CARGAR SERVICIOS ==================
         private void CargarServicios()
         {
-            // Aquí puedes cargar los servicios disponibles en el comboBox2
-            // Por ejemplo, podrías tener una lista fija o cargar desde la base de datos
             var servicios = new List<string>
             {
                 "Consulta General",
@@ -59,79 +128,78 @@ namespace Veterinaria
                 "Corte de Uñas",
                 "Baño y Aseo"
             };
+
             comboBoxServicio.DataSource = servicios;
+            comboBoxServicio.SelectedIndex = -1;
         }
 
-        private void btnGuardarCita_Click(object sender, EventArgs e)
+        // ================== BOTÓN CREAR CITA ==================
+        private void CrearCitaAdmi_Click(object sender, EventArgs e)
         {
-            if (comboBoxUsuarios.SelectedValue == null ||
-                string.IsNullOrEmpty(txtNombreMascota.Text.Trim()) ||
-                string.IsNullOrEmpty(comboBoxServicio.Text.Trim()))
-            {
-                MessageBox.Show("Por favor complete todos los campos.", "Advertencia",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            comboBoxMascotas.DataSource = null;
+            comboBoxMascotas.Enabled = false;
+
+            if (comboBoxUsuarios.SelectedItem == null)
                 return;
-            }
 
             try
             {
-                Citas nuevaCita = new Citas
+                Usuarios usuarioSeleccionado = comboBoxUsuarios.SelectedItem as Usuarios;
+                if (usuarioSeleccionado == null)
                 {
-                    UsuarioDocumento = comboBoxUsuarios.SelectedValue.ToString(),
-                    MascotaNombre = txtNombreMascota.Text.Trim(),
-                    FechaCita = dtpFecha.Value.ToString("yyyy-MM-dd"),
-                    HoraCita = dtpFecha.Value.ToString("hh:mm tt"),
-                    ServicioCita = comboBoxServicio.SelectedItem.ToString(),
-                    NotasCita = txtNotas.Text.Trim(),
-                    FechaCreacion = DateTime.Now
-                };
+                    MessageBox.Show("No se pudo obtener el usuario seleccionado.");
+                    return;
+                }
 
-                _citasCollection.InsertOne(nuevaCita);
+                string numeroDocumento = usuarioSeleccionado.NumeroDocumento;
+                Console.WriteLine($"Buscando mascotas para el número de documento: '{numeroDocumento}'");
 
-                MessageBox.Show("✅ Cita registrada correctamente.", "Éxito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // ================== FILTRO SIMPLE Y FUNCIONAL ==================
+                // Comparación exacta (case-insensitive con regex)
+                var filter = Builders<Mascota>.Filter.Regex(
+                    m => m.NumeroDocumentoDueño,
+                    new MongoDB.Bson.BsonRegularExpression($"^{numeroDocumento}$", "i")
+                );
 
-                // Limpiar campos
-                txtNombreMascota.Clear();
-                comboBoxServicio.SelectedIndex = 0;
-                dtpFecha.Value = DateTime.Now;
-                dtpFecha.Value = DateTime.Now;
-                comboBoxServicio.SelectedIndex = 0;
-                txtNotas.Clear();
+                var mascotas = _mascotasCollection.Find(filter).ToList();
+
+                // ================== DEPURACIÓN ==================
+                var todasMascotas = _mascotasCollection.Find(FilterDefinition<Mascota>.Empty).ToList();
+                Console.WriteLine("=== TODAS LAS MASCOTAS EN BD ===");
+                foreach (var m in todasMascotas)
+                {
+                    Console.WriteLine($"Mascota: '{m.NombreMascota}', Dueño: '{m.NumeroDocumentoDueño}'");
+                }
+                Console.WriteLine("================================");
+
+                Console.WriteLine($"Mascotas encontradas: {mascotas.Count}");
+
+                if (mascotas.Count == 0)
+                {
+                    MessageBox.Show("Este usuario no tiene mascotas registradas.", "Información",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    comboBoxMascotas.DisplayMember = "NombreMascota";
+                    comboBoxMascotas.ValueMember = "_id";
+                    comboBoxMascotas.DataSource = mascotas;
+                    comboBoxMascotas.SelectedIndex = -1;
+                    comboBoxMascotas.Enabled = true;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar la cita: {ex.Message}", "Error",
+                MessageBox.Show($"Error al cargar mascotas: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void UserControl1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        // ================== BOTÓN CANCELAR ==================
         private void btnCancelar_Click(object sender, EventArgs e)
-        { // Oculta este panel
-            this.Visible = false;
-
-            // 🔓 Reactiva los paneles del formulario principal
-            if (this.Tag is FrmAdmin parentForm)
-            {
-                parentForm.PanelCerrarSAdPublic.Enabled = true;
-                parentForm.PanelGestionUsuariosPublic.Enabled = true;
-            }
-
-            // Opcional: elimina el control del contenedor
+        {
+            OnEdicionTerminada?.Invoke(this, EventArgs.Empty);
             this.Dispose();
         }
-
     }
 }
-
-

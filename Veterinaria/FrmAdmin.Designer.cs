@@ -225,7 +225,7 @@
             this.panelGestionUsuarios.Name = "panelGestionUsuarios";
             this.panelGestionUsuarios.Size = new System.Drawing.Size(814, 451);
             this.panelGestionUsuarios.TabIndex = 52;
-            this.panelGestionUsuarios.Paint += new System.Windows.Forms.PaintEventHandler(this.panelGestionUsuarios_Paint);
+            
             // 
             // btnEliminarCita
             // 
@@ -277,7 +277,7 @@
             this.lblCitasPendientes.Size = new System.Drawing.Size(35, 13);
             this.lblCitasPendientes.TabIndex = 55;
             this.lblCitasPendientes.Text = "label4";
-            this.lblCitasPendientes.Click += new System.EventHandler(this.lblCitasPendientes_Click);
+            
             // 
             // lblTotalCitas
             // 
