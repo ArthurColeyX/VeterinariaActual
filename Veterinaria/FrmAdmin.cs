@@ -13,6 +13,10 @@ namespace Veterinaria
         private readonly IMongoCollection<Usuarios> _usuariosCollection;
         private readonly IMongoCollection<Citas> _citasCollection;
 
+
+
+        private List<Citas> _citasActuales;
+
         public Panel PanelCerrarSAdPublic => PanelCerrarSAd;
         public Panel PanelGestionUsuariosPublic => panelGestionUsuarios;
 
@@ -29,13 +33,14 @@ namespace Veterinaria
             _citasCollection = database.GetCollection<Citas>("Citas");
 
             ConfigurarDataGrid();
+
         }
 
         private void FrmAdmin_Load(object sender, EventArgs e)
         {
-
             panelCrearCita.Visible = false;
             CargarTodosLosUsuarios();
+            CargarCitas(); // 👈 mostrar citas al cargar
             ActualizarContadoresCitas();
         }
 
@@ -67,22 +72,22 @@ namespace Veterinaria
         {
             panelCrearCita.Controls.Clear();
 
-            // Si tu UserControl recibe parámetros, agrégalos aquí
             var uc = new UserControl1();
             uc.Dock = DockStyle.Fill;
 
-            // Suscribirse al evento del control para regresar al menú
-            uc.OnEdicionTerminada += (s, args) => MostrarControlesMenu();
+            uc.OnEdicionTerminada += (s, args) =>
+            {
+                MostrarControlesMenu();
+                CargarCitas();
+            };
 
             panelCrearCita.Controls.Add(uc);
             panelCrearCita.BringToFront();
-
-            // Oculta el resto del menú mientras el UserControl está activo
             OcultarControlesMenu();
         }
 
         // ==========================================================
-        // 🔹 RESTO DE TU CÓDIGO ORIGINAL (no se modifica)
+        // 🔹 CONFIGURACIÓN DEL DATAGRID DE USUARIOS
         private void ConfigurarDataGrid()
         {
             datagridGestion.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -123,26 +128,33 @@ namespace Veterinaria
             {
                 datagridGestion.Columns["_id"].HeaderText = "ID";
                 datagridGestion.Columns["_id"].ReadOnly = true;
-                datagridGestion.Columns["_id"].Width = 100;
-
                 datagridGestion.Columns["NombreUsuario"].HeaderText = "Nombre";
-                datagridGestion.Columns["NombreUsuario"].Width = 150;
-
                 datagridGestion.Columns["Correo"].HeaderText = "Correo";
-                datagridGestion.Columns["Correo"].Width = 180;
-
                 datagridGestion.Columns["NumeroDocumento"].HeaderText = "Documento";
-                datagridGestion.Columns["NumeroDocumento"].Width = 100;
-
                 datagridGestion.Columns["TelefonoUsuario"].HeaderText = "Teléfono";
-                datagridGestion.Columns["TelefonoUsuario"].Width = 120;
-
                 datagridGestion.Columns["Contraseña"].Visible = false;
                 datagridGestion.Columns["RolUsuario"].HeaderText = "Rol";
-                datagridGestion.Columns["RolUsuario"].Width = 100;
             }
         }
 
+        // ==========================================================
+        // 🔹 CARGAR CITAS EN EL DATAGRID DE CITAS
+        private void CargarCitas()
+        {
+            try
+            {
+                var listaCitas = _citasCollection.Find(_ => true).ToList();
+                datagridGestion.DataSource = listaCitas;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar citas: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ==========================================================
+        // 🔹 CONTADORES DE CITAS
         private void ActualizarContadoresCitas()
         {
             try
@@ -153,13 +165,215 @@ namespace Veterinaria
                 int pendientes = todasLasCitas.Count(c => c.EstadoCita == "Pendiente");
                 int confirmadas = todasLasCitas.Count(c => c.EstadoCita == "Confirmada" || c.EstadoCita == "Reprogramada");
                 int completadas = todasLasCitas.Count(c => c.EstadoCita == "Completada");
-
-                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al actualizar contadores: {ex.Message}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ==========================================================
+        // 🔹 BOTÓN EDITAR CITA (abre el UserControlEditarCita)
+        private void btnEditarCita_Click(object sender, EventArgs e)
+        {
+            if (datagridGestion.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccione una cita para editar.", "Advertencia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var citaSeleccionada = datagridGestion.CurrentRow.DataBoundItem as Citas;
+            if (citaSeleccionada == null)
+            {
+                MessageBox.Show("Error al obtener los datos de la cita.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Crear instancia del UserControl
+            UserControlEditarCita controlEditar = new UserControlEditarCita(citaSeleccionada);
+            controlEditar.Dock = DockStyle.Fill;
+
+            // Evento cuando se termina la edición
+            controlEditar.OnEdicionTerminada += (s, args) =>
+            {
+                panelCrearCita.Controls.Clear();
+                CargarCitas(); // refrescar citas
+                MostrarControlesMenu();
+            };
+
+            // Mostrar en el panel
+            panelCrearCita.Controls.Clear();
+            panelCrearCita.Controls.Add(controlEditar);
+            controlEditar.BringToFront();
+
+            // Ocultar menú
+            OcultarControlesMenu();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmCrudUsuarios CrudUsuarios = new FrmCrudUsuarios();
+            CrudUsuarios.Show();
+            this.Hide();
+        }
+
+        private void comboBoxFiltroCitas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Verifica que haya conexión y colección
+                if (_citasCollection == null)
+                {
+                    MessageBox.Show("La colección de citas no está inicializada.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Cargar todas las citas desde la base de datos
+                var todasLasCitas = _citasCollection.Find(_ => true).ToList();
+
+                if (todasLasCitas == null || todasLasCitas.Count == 0)
+                {
+                    datagridGestion.DataSource = null;
+                    MessageBox.Show("No hay citas registradas actualmente.", "Aviso",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Obtener el valor seleccionado
+                string filtroSeleccionado = comboBoxFiltroCitas.SelectedItem?.ToString();
+
+                if (string.IsNullOrEmpty(filtroSeleccionado))
+                    return;
+
+                List<Citas> citasFiltradas = new List<Citas>();
+
+                // Aplicar filtro según la selección
+                switch (filtroSeleccionado)
+                {
+                    case "Todas las citas":
+                        citasFiltradas = todasLasCitas;
+                        break;
+
+                    case "Pendientes":
+                        citasFiltradas = todasLasCitas
+                            .Where(c => c.EstadoCita == "Pendiente")
+                            .ToList();
+                        break;
+
+                    case "Confirmadas":
+                        citasFiltradas = todasLasCitas
+                            .Where(c => c.EstadoCita == "Confirmada")
+                            .ToList();
+                        break;
+
+                    case "Completadas":
+                        citasFiltradas = todasLasCitas
+                            .Where(c => c.EstadoCita == "Completada")
+                            .ToList();
+                        break;
+
+                    case "Canceladas":
+                        citasFiltradas = todasLasCitas
+                            .Where(c => c.EstadoCita == "Cancelada")
+                            .ToList();
+                        break;
+
+                    default:
+                        citasFiltradas = todasLasCitas;
+                        break;
+                }
+
+                // Mostrar en el DataGrid
+                datagridGestion.DataSource = citasFiltradas;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al filtrar las citas: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void btnEliminarCita_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (datagridGestion.CurrentRow == null)
+                {
+                    MessageBox.Show("Seleccione una cita para eliminar.", "Advertencia",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var citaSeleccionada = datagridGestion.CurrentRow.DataBoundItem as Citas;
+                if (citaSeleccionada == null)
+                {
+                    MessageBox.Show("No se pudo obtener la cita seleccionada.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Confirmar eliminación
+                DialogResult confirmacion = MessageBox.Show(
+                    $"¿Está seguro de eliminar la cita de '{citaSeleccionada.MascotaNombre}' " +
+                    $"programada para el {citaSeleccionada.FechaCita} a las {citaSeleccionada.HoraCita}?",
+                    "Confirmar eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (confirmacion == DialogResult.No)
+                    return;
+
+                // Eliminar cita en MongoDB
+                var resultado = _citasCollection.DeleteOne(c => c._id == citaSeleccionada._id);
+
+                if (resultado.DeletedCount > 0)
+                {
+                    MessageBox.Show("🗑️ Cita eliminada correctamente.", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // 🔄 Recargar citas y actualizar contador
+                    CargarCitas();
+                    ActualizarContadoresCitas();
+
+                    // Si tienes el filtro activo, lo aplicamos de nuevo
+                    if (comboBoxFiltroCitas.SelectedItem != null)
+                    {
+                        comboBoxFiltroCitas_SelectedIndexChanged(null, null);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("⚠️ No se pudo eliminar la cita (puede que ya no exista).",
+                        "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al eliminar la cita: {ex.Message}", "Error",
+                  MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+
+            }
+        }
+
+        private void CerrarSesionAdmi_Click(object sender, EventArgs e)
+        {
+            var confirmar = MessageBox.Show("¿Seguro que deseas cerrar sesión?",
+             "Cancelar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmar == DialogResult.Yes)
+            {
+               Form1 login = new Form1();
+                login.Show();
+                this.Hide();
             }
         }
     }

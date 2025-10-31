@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,21 @@ namespace Veterinaria
             var db = ConexionMongo.ObtenerConexion();
             _citasCollection = db.GetCollection<Citas>("Citas");
             _usuariosCollection = db.GetCollection<Usuarios>("Usuarios");
-            _mascotasCollection = db.GetCollection<Mascota>("Mascota");
+            _mascotasCollection = db.GetCollection<Mascota>("Mascota"); 
 
+            // Config inicial
             dtpFecha.MinDate = DateTime.Today;
             comboBoxMascotas.Enabled = false;
+
+            // === DTP HORA ===
+            dtpHora.Format = DateTimePickerFormat.Custom;
+            dtpHora.CustomFormat = "hh:mm tt";
+            dtpHora.ShowUpDown = true;
+            dtpHora.Value = DateTime.Today.AddHours(8); // 8:00 a.m.
+
+            // 👇 Eventos para avanzar 30 minutos
+            dtpHora.KeyDown += DtpHora_KeyDown;
+            dtpHora.MouseWheel += DtpHora_MouseWheel;
 
             CargarUsuarios();
             CargarServicios();
@@ -32,10 +44,7 @@ namespace Veterinaria
             comboBoxUsuarios.SelectedIndexChanged += comboBoxUsuarios_SelectedIndexChanged;
         }
 
-        private void UserControl1_Load(object sender, EventArgs e) {
-            
-            }
-        
+        private void UserControl1_Load(object sender, EventArgs e) { }
 
         // ================== CARGAR USUARIOS ==================
         private void CargarUsuarios()
@@ -46,13 +55,9 @@ namespace Veterinaria
                     .Find(u => u.RolUsuario != "Administrador")
                     .ToList();
 
-                comboBoxUsuarios.DisplayMember = "NombreUsuario"; // Mostrar nombre
+                comboBoxUsuarios.DisplayMember = "NombreUsuario";
                 comboBoxUsuarios.DataSource = usuarios;
                 comboBoxUsuarios.SelectedIndex = -1;
-
-                Console.WriteLine("Usuarios cargados:");
-                foreach (var u in usuarios)
-                    Console.WriteLine($"Nombre: '{u.NombreUsuario}', NúmeroDocumento: '{u.NumeroDocumento}'");
             }
             catch (Exception ex)
             {
@@ -61,7 +66,7 @@ namespace Veterinaria
             }
         }
 
-        // ================== CARGAR MASCOTAS DEL USUARIO ==================
+        // ================== CARGAR MASCOTAS ==================
         private void comboBoxUsuarios_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBoxMascotas.DataSource = null;
@@ -72,30 +77,13 @@ namespace Veterinaria
 
             try
             {
-                Usuarios usuarioSeleccionado = comboBoxUsuarios.SelectedItem as Usuarios;
-                if (usuarioSeleccionado == null)
-                    return;
-
-                // ---------------- DEPURACIÓN: MOSTRAR TODAS LAS MASCOTAS ----------------
-                var todasMascotas = _mascotasCollection.Find(FilterDefinition<Mascota>.Empty).ToList();
-                Console.WriteLine("=== TODAS LAS MASCOTAS EN BD ===");
-                foreach (var m in todasMascotas)
-                {
-                    string dueño = m.NumeroDocumentoDueño ?? "(null)";
-                    Console.WriteLine($"Mascota: '{m.NombreMascota}', Dueño: '{dueño}' (Tipo: {m.NumeroDocumentoDueño?.GetType()})");
-                }
-                Console.WriteLine("================================");
-
-                string numeroDocumento = usuarioSeleccionado.NumeroDocumento?.Trim();
+                Usuarios usuario = comboBoxUsuarios.SelectedItem as Usuarios;
+                string numeroDocumento = usuario?.NumeroDocumento?.Trim();
                 if (string.IsNullOrEmpty(numeroDocumento))
                     return;
 
-                Console.WriteLine($"Buscando mascotas para el número de documento: '{numeroDocumento}'");
-
                 var filter = Builders<Mascota>.Filter.Eq("numeroDocumentoDueño", numeroDocumento);
                 var mascotas = _mascotasCollection.Find(filter).ToList();
-
-                Console.WriteLine($"Mascotas encontradas: {mascotas.Count}");
 
                 if (mascotas.Count == 0)
                 {
@@ -136,21 +124,16 @@ namespace Veterinaria
         // ================== BOTÓN CREAR CITA ==================
         private void CrearCitaAdmi_Click(object sender, EventArgs e)
         {
-            // Validar usuario
             if (comboBoxUsuarios.SelectedItem == null)
             {
                 MessageBox.Show("Seleccione un dueño.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // Validar mascota
             if (comboBoxMascotas.SelectedValue == null)
             {
                 MessageBox.Show("Seleccione una mascota.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // Validar servicio
             if (string.IsNullOrEmpty(comboBoxServicio.Text.Trim()))
             {
                 MessageBox.Show("Seleccione un servicio.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -158,35 +141,44 @@ namespace Veterinaria
             }
 
             DateTime fechaSeleccionada = dtpFecha.Value.Date;
-            DateTime horaSeleccionada = dtpFecha.Value;
+            DateTime horaSeleccionada = dtpHora.Value;
+            DateTime fechaHoraCita = fechaSeleccionada.Add(horaSeleccionada.TimeOfDay);
             DateTime ahora = DateTime.Now;
 
-            // Validar hora si la fecha es hoy
-            if (fechaSeleccionada == ahora.Date && horaSeleccionada.TimeOfDay < ahora.TimeOfDay)
+            if (horaSeleccionada.Hour < 8 || horaSeleccionada.Hour >= 18)
             {
-                MessageBox.Show("No puede seleccionar una hora pasada para hoy.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El horario permitido es de 8:00 a.m. a 6:00 p.m.", "Advertencia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (fechaSeleccionada == ahora.Date && fechaHoraCita < ahora)
+            {
+                MessageBox.Show("No puede seleccionar una hora pasada para hoy.", "Advertencia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                // Obtener usuario seleccionado
                 Usuarios usuarioSeleccionado = comboBoxUsuarios.SelectedItem as Usuarios;
 
-                // Validar cruce de citas
-                var citaExistente = _citasCollection.Find(c =>
-                    c.MascotaNombre == comboBoxMascotas.Text &&
-                    c.FechaCita == fechaSeleccionada.ToString("yyyy-MM-dd") &&
-                    c.HoraCita == horaSeleccionada.ToString("hh:mm tt")
-                ).FirstOrDefault();
+                // 🔒 VALIDACIÓN: verificar si ya existe una cita con esa mascota, fecha y hora
+                var filter = Builders<Citas>.Filter.And(
+                    Builders<Citas>.Filter.Eq(c => c.MascotaNombre, comboBoxMascotas.Text),
+                    Builders<Citas>.Filter.Eq(c => c.FechaCita, fechaSeleccionada.ToString("yyyy-MM-dd")),
+                    Builders<Citas>.Filter.Eq(c => c.HoraCita, horaSeleccionada.ToString("hh:mm tt"))
+                );
 
+                var citaExistente = _citasCollection.Find(filter).FirstOrDefault();
                 if (citaExistente != null)
                 {
-                    MessageBox.Show("Ya existe una cita para esta mascota en la fecha y hora seleccionadas.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Ya existe una cita para esta mascota en la fecha y hora seleccionadas.",
+                        "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Crear la nueva cita
+                // ✅ Crear cita
                 Citas nuevaCita = new Citas
                 {
                     UsuarioDocumento = usuarioSeleccionado.NumeroDocumento,
@@ -198,30 +190,66 @@ namespace Veterinaria
                     FechaCreacion = DateTime.Now
                 };
 
-                // Insertar en MongoDB
                 _citasCollection.InsertOne(nuevaCita);
 
-                MessageBox.Show("✅ Cita registrada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"✅ Cita registrada correctamente para {nuevaCita.MascotaNombre}\n" +
+                    $"{nuevaCita.FechaCita} a las {nuevaCita.HoraCita}",
+                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Limpiar campos
                 comboBoxUsuarios.SelectedIndex = -1;
                 comboBoxMascotas.DataSource = null;
                 comboBoxMascotas.Enabled = false;
                 comboBoxServicio.SelectedIndex = -1;
                 dtpFecha.Value = DateTime.Now;
+                dtpHora.Value = DateTime.Today.AddHours(8);
                 txtNotas.Clear();
 
-                // Notificar al contenedor del UserControl
                 OnEdicionTerminada?.Invoke(this, EventArgs.Empty);
                 this.Dispose();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar la cita: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al guardar la cita: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ================== BOTÓN CANCELAR ==================
+        // ================== CONTROL DE INTERVALOS ==================
+        private void DtpHora_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                CambiarIntervalo(30);
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                CambiarIntervalo(-30);
+                e.Handled = true;
+            }
+        }
+
+        private void DtpHora_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+                CambiarIntervalo(30);
+            else
+                CambiarIntervalo(-30);
+        }
+
+        private void CambiarIntervalo(int minutos)
+        {
+            DateTime nuevaHora = dtpHora.Value.AddMinutes(minutos);
+
+            // Restringir horario de 8:00 AM a 6:00 PM
+            if (nuevaHora.Hour < 8)
+                nuevaHora = new DateTime(nuevaHora.Year, nuevaHora.Month, nuevaHora.Day, 8, 0, 0);
+            else if (nuevaHora.Hour > 17 || (nuevaHora.Hour == 17 && nuevaHora.Minute > 30))
+                nuevaHora = new DateTime(nuevaHora.Year, nuevaHora.Month, nuevaHora.Day, 17, 30, 0);
+
+            dtpHora.Value = nuevaHora;
+        }
+
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             OnEdicionTerminada?.Invoke(this, EventArgs.Empty);

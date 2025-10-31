@@ -313,6 +313,46 @@ namespace Veterinaria.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Captura_de_pantalla_2025_10_30_220832 {
+            get {
+                object obj = ResourceManager.GetObject("Captura de pantalla 2025-10-30 220832", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Captura_de_pantalla_2025_10_30_221028 {
+            get {
+                object obj = ResourceManager.GetObject("Captura de pantalla 2025-10-30 221028", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Captura_de_pantalla_2025_10_30_222211 {
+            get {
+                object obj = ResourceManager.GetObject("Captura de pantalla 2025-10-30 222211", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Captura_de_pantalla_2025_10_30_222418 {
+            get {
+                object obj = ResourceManager.GetObject("Captura de pantalla 2025-10-30 222418", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Cuadro_en_balnco {
             get {
                 object obj = ResourceManager.GetObject("Cuadro en balnco", resourceCulture);

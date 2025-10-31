@@ -24,6 +24,14 @@ namespace Veterinaria
             var database = ConexionMongo.ObtenerConexion();
             _usuariosCollection = database.GetCollection<Usuarios>("Usuarios");
 
+            // Añadir validaciones de entrada
+            // Teléfono y documento sólo números
+            if (txtTel != null) txtTel.KeyPress += OnlyDigits_KeyPress;
+            if (txt_id != null) txt_id.KeyPress += OnlyDigits_KeyPress;
+
+            // Nombres sólo letras (permitir espacio y guión)
+            if (txtNombre != null) txtNombre.KeyPress += OnlyLetters_KeyPress;
+            if (txtApellido != null) txtApellido.KeyPress += OnlyLetters_KeyPress;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -55,7 +63,6 @@ namespace Veterinaria
                 Application.Exit();
             }
         }
-
    
 
         private void lblRegistroPRecuperar_Click(object sender, EventArgs e)
@@ -181,6 +188,14 @@ namespace Veterinaria
                 return;
             }
 
+            // Validar correo básico
+            if (!ValidateEmail(correo))
+            {
+                MessageBox.Show("Ingrese un correo electrónico válido.", "Advertencia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 // Verificar si el correo ya está registrado
@@ -223,6 +238,32 @@ namespace Veterinaria
                 MessageBox.Show($"Error al registrar usuario:\n{ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // ======= VALIDATORS =======
+        private void OnlyDigits_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir control (backspace) y dígitos
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void OnlyLetters_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir letras, control, espacio, guión y apóstrofe
+            if (!char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar) && e.KeyChar != ' ' && e.KeyChar != '-' && e.KeyChar != '\'')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private bool ValidateEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+            return email.Contains("@") && email.Contains(".");
         }
     }
     
