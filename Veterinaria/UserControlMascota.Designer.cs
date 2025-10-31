@@ -40,7 +40,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.btn_cerar = new System.Windows.Forms.Label();
             this.btn_registar_mascota = new System.Windows.Forms.Button();
             this.comboBoxespecie = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -110,7 +110,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(49, 257);
+            this.label4.Location = new System.Drawing.Point(43, 257);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 18);
             this.label4.TabIndex = 5;
@@ -181,16 +181,16 @@
             this.textBox4.Size = new System.Drawing.Size(520, 22);
             this.textBox4.TabIndex = 3;
             // 
-            // label7
+            // btn_cerar
             // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(580, 37);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(23, 29);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "x";
+            this.btn_cerar.AutoSize = true;
+            this.btn_cerar.BackColor = System.Drawing.Color.Transparent;
+            this.btn_cerar.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_cerar.Location = new System.Drawing.Point(580, 37);
+            this.btn_cerar.Name = "btn_cerar";
+            this.btn_cerar.Size = new System.Drawing.Size(23, 29);
+            this.btn_cerar.TabIndex = 8;
+            this.btn_cerar.Text = "x";
             // 
             // btn_registar_mascota
             // 
@@ -217,9 +217,9 @@
             "Conejo",
             "Háster",
             "Reptil"});
-            this.comboBoxespecie.Location = new System.Drawing.Point(52, 294);
+            this.comboBoxespecie.Location = new System.Drawing.Point(46, 289);
             this.comboBoxespecie.Name = "comboBoxespecie";
-            this.comboBoxespecie.Size = new System.Drawing.Size(535, 21);
+            this.comboBoxespecie.Size = new System.Drawing.Size(547, 21);
             this.comboBoxespecie.TabIndex = 10;
             // 
             // label8
@@ -240,9 +240,9 @@
             this.comboBoxsexo.Items.AddRange(new object[] {
             "Masculino",
             "Femenino"});
-            this.comboBoxsexo.Location = new System.Drawing.Point(43, 343);
+            this.comboBoxsexo.Location = new System.Drawing.Point(46, 343);
             this.comboBoxsexo.Name = "comboBoxsexo";
-            this.comboBoxsexo.Size = new System.Drawing.Size(535, 21);
+            this.comboBoxsexo.Size = new System.Drawing.Size(547, 21);
             this.comboBoxsexo.TabIndex = 13;
             this.comboBoxsexo.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -256,7 +256,7 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.comboBoxespecie);
             this.Controls.Add(this.btn_registar_mascota);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.btn_cerar);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -291,7 +291,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label btn_cerar;
         private System.Windows.Forms.Button btn_registar_mascota;
         private System.Windows.Forms.TextBox txt_nombre_mascota;
         private System.Windows.Forms.TextBox textBox3;

@@ -87,22 +87,27 @@ namespace Veterinaria
 
             // === Encabezados de columna ===
             data_grid_mascotas.EnableHeadersVisualStyles = false;
-            data_grid_mascotas.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(58, 134, 255); // azul moderno
-            data_grid_mascotas.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            // Cambiado a blanco y texto gris para el encabezado según solicitud
+            data_grid_mascotas.ColumnHeadersDefaultCellStyle.BackColor = Color.White;
+            data_grid_mascotas.ColumnHeadersDefaultCellStyle.ForeColor = Color.Gray;
             data_grid_mascotas.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
             data_grid_mascotas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             data_grid_mascotas.ColumnHeadersHeight = 35;
 
             // === Filas ===
-            data_grid_mascotas.RowsDefaultCellStyle.BackColor = Color.FromArgb(245, 247, 250); // gris muy claro
-            data_grid_mascotas.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(235, 240, 255); // tono azulado suave
+            // filas principales en blanco y alternadas en gris
+            data_grid_mascotas.RowsDefaultCellStyle.BackColor = Color.White; // blanco
+            data_grid_mascotas.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray; // gris claro
             data_grid_mascotas.DefaultCellStyle.ForeColor = Color.FromArgb(50, 50, 50);
             data_grid_mascotas.DefaultCellStyle.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular);
             data_grid_mascotas.DefaultCellStyle.Padding = new Padding(5, 2, 5, 2);
+            // Alinear texto de las celdas al centro para que queden alineadas
+            data_grid_mascotas.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             // === Efectos al seleccionar ===
-            data_grid_mascotas.DefaultCellStyle.SelectionBackColor = Color.FromArgb(58, 134, 255); // mismo azul del encabezado
-            data_grid_mascotas.DefaultCellStyle.SelectionForeColor = Color.White;
+            // Selección en gris claro con texto negro (no morado)
+            data_grid_mascotas.DefaultCellStyle.SelectionBackColor = Color.LightGray;
+            data_grid_mascotas.DefaultCellStyle.SelectionForeColor = Color.Black;
 
             // === Ajustes de filas ===
             data_grid_mascotas.RowTemplate.Height = 30;
@@ -110,17 +115,18 @@ namespace Veterinaria
             data_grid_mascotas.ScrollBars = ScrollBars.Both;
 
             // === Estilo al pasar el mouse ===
+            // Resaltar sutilmente en gris claro al pasar el mouse
             data_grid_mascotas.CellMouseEnter += (s, e) =>
             {
                 if (e.RowIndex >= 0)
-                    data_grid_mascotas.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(225, 235, 255);
+                    data_grid_mascotas.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray;
             };
 
             data_grid_mascotas.CellMouseLeave += (s, e) =>
             {
                 if (e.RowIndex >= 0)
                     data_grid_mascotas.Rows[e.RowIndex].DefaultCellStyle.BackColor =
-                        e.RowIndex % 2 == 0 ? Color.FromArgb(245, 247, 250) : Color.FromArgb(235, 240, 255);
+                        e.RowIndex % 2 == 0 ? Color.White : Color.LightGray;
             };
         }
 
@@ -174,6 +180,18 @@ namespace Veterinaria
                         data_grid_mascotas.Columns["Sexo"].HeaderText = "Sexo";
                     if (data_grid_mascotas.Columns.Contains("Peso"))
                         data_grid_mascotas.Columns["Peso"].HeaderText = "Peso";
+
+                    // Asegurar orden y alineación consistente de columnas
+                    int index = 0;
+                    string[] desiredOrder = { "NombreMascota", "Especie", "Raza", "Edad", "Sexo", "Peso" };
+                    foreach (var colName in desiredOrder)
+                    {
+                        if (data_grid_mascotas.Columns.Contains(colName))
+                        {
+                            data_grid_mascotas.Columns[colName].DisplayIndex = index++;
+                            data_grid_mascotas.Columns[colName].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        }
+                    }
 
                     data_grid_mascotas.ClearSelection();
                 }
@@ -321,8 +339,9 @@ namespace Veterinaria
 
         private void dgvCitas_MouseClick(object sender, MouseEventArgs e)
         {
-            data_grid_mascotas.DefaultCellStyle.SelectionBackColor = Color.MediumPurple; // Fondo al seleccionar
-            data_grid_mascotas.DefaultCellStyle.SelectionForeColor = Color.White;        // Texto al seleccionar
+            // Evitar color morado en selección; usar gris claro y texto negro
+            data_grid_mascotas.DefaultCellStyle.SelectionBackColor = Color.LightGray; // Fondo al seleccionar
+            data_grid_mascotas.DefaultCellStyle.SelectionForeColor = Color.Black; // Texto al seleccionar
 
         }
 
