@@ -39,7 +39,7 @@ namespace Veterinaria
                 ConfigurarDataGrid();
                 
 
-                dgvCitas.SelectionChanged += dgvCitas_SelectionChanged;
+                data_grid_mascotas.SelectionChanged += dgvCitas_SelectionChanged;
             }
             catch (Exception ex)
             {
@@ -52,65 +52,65 @@ namespace Veterinaria
         private void ConfigurarDataGrid()
         {
             // 🔒 Bloquear edición y redimensión:
-            dgvCitas.ReadOnly = true;                        // Solo lectura
-            dgvCitas.AllowUserToAddRows = false;             // No permitir agregar filas manualmente
-            dgvCitas.AllowUserToDeleteRows = false;          // No permitir eliminar desde el grid
-            dgvCitas.AllowUserToResizeRows = false;          // No permitir cambiar el alto de filas
-            dgvCitas.AllowUserToResizeColumns = false;       // No permitir cambiar ancho de columnas
-            dgvCitas.AllowUserToOrderColumns = false;        // No permitir mover columnas
-            dgvCitas.MultiSelect = false;                    // Solo una fila seleccionada
-            dgvCitas.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Selección por fila completa
-            dgvCitas.RowHeadersVisible = false;              // Oculta el borde izquierdo de numeración
-            dgvCitas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Ajuste automático de columnas
+            data_grid_mascotas.ReadOnly = true;                        // Solo lectura
+            data_grid_mascotas.AllowUserToAddRows = false;             // No permitir agregar filas manualmente
+            data_grid_mascotas.AllowUserToDeleteRows = false;          // No permitir eliminar desde el grid
+            data_grid_mascotas.AllowUserToResizeRows = false;          // No permitir cambiar el alto de filas
+            data_grid_mascotas.AllowUserToResizeColumns = false;       // No permitir cambiar ancho de columnas
+            data_grid_mascotas.AllowUserToOrderColumns = false;        // No permitir mover columnas
+            data_grid_mascotas.MultiSelect = false;                    // Solo una fila seleccionada
+            data_grid_mascotas.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Selección por fila completa
+            data_grid_mascotas.RowHeadersVisible = false;              // Oculta el borde izquierdo de numeración
+            data_grid_mascotas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Ajuste automático de columnas
 
             // === Configuración general ===
-            dgvCitas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvCitas.MultiSelect = false;
-            dgvCitas.ReadOnly = true;
-            dgvCitas.AllowUserToAddRows = false;
-            dgvCitas.AllowUserToDeleteRows = false;
-            dgvCitas.RowHeadersVisible = false;
-            dgvCitas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvCitas.BorderStyle = BorderStyle.None;
-            dgvCitas.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvCitas.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvCitas.BackgroundColor = Color.White;
+            data_grid_mascotas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            data_grid_mascotas.MultiSelect = false;
+            data_grid_mascotas.ReadOnly = true;
+            data_grid_mascotas.AllowUserToAddRows = false;
+            data_grid_mascotas.AllowUserToDeleteRows = false;
+            data_grid_mascotas.RowHeadersVisible = false;
+            data_grid_mascotas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            data_grid_mascotas.BorderStyle = BorderStyle.None;
+            data_grid_mascotas.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            data_grid_mascotas.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            data_grid_mascotas.BackgroundColor = Color.White;
 
             // === Encabezados de columna ===
-            dgvCitas.EnableHeadersVisualStyles = false;
-            dgvCitas.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(58, 134, 255); // azul moderno
-            dgvCitas.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvCitas.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
-            dgvCitas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgvCitas.ColumnHeadersHeight = 35;
+            data_grid_mascotas.EnableHeadersVisualStyles = false;
+            data_grid_mascotas.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(58, 134, 255); // azul moderno
+            data_grid_mascotas.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            data_grid_mascotas.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 10, FontStyle.Bold);
+            data_grid_mascotas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            data_grid_mascotas.ColumnHeadersHeight = 35;
 
             // === Filas ===
-            dgvCitas.RowsDefaultCellStyle.BackColor = Color.FromArgb(245, 247, 250); // gris muy claro
-            dgvCitas.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(235, 240, 255); // tono azulado suave
-            dgvCitas.DefaultCellStyle.ForeColor = Color.FromArgb(50, 50, 50);
-            dgvCitas.DefaultCellStyle.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular);
-            dgvCitas.DefaultCellStyle.Padding = new Padding(5, 2, 5, 2);
+            data_grid_mascotas.RowsDefaultCellStyle.BackColor = Color.FromArgb(245, 247, 250); // gris muy claro
+            data_grid_mascotas.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(235, 240, 255); // tono azulado suave
+            data_grid_mascotas.DefaultCellStyle.ForeColor = Color.FromArgb(50, 50, 50);
+            data_grid_mascotas.DefaultCellStyle.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular);
+            data_grid_mascotas.DefaultCellStyle.Padding = new Padding(5, 2, 5, 2);
 
             // === Efectos al seleccionar ===
-            dgvCitas.DefaultCellStyle.SelectionBackColor = Color.FromArgb(58, 134, 255); // mismo azul del encabezado
-            dgvCitas.DefaultCellStyle.SelectionForeColor = Color.White;
+            data_grid_mascotas.DefaultCellStyle.SelectionBackColor = Color.FromArgb(58, 134, 255); // mismo azul del encabezado
+            data_grid_mascotas.DefaultCellStyle.SelectionForeColor = Color.White;
 
             // === Ajustes de filas ===
-            dgvCitas.RowTemplate.Height = 30;
-            dgvCitas.GridColor = Color.FromArgb(220, 225, 230); // líneas sutiles
-            dgvCitas.ScrollBars = ScrollBars.Both;
+            data_grid_mascotas.RowTemplate.Height = 30;
+            data_grid_mascotas.GridColor = Color.FromArgb(220, 225, 230); // líneas sutiles
+            data_grid_mascotas.ScrollBars = ScrollBars.Both;
 
             // === Estilo al pasar el mouse ===
-            dgvCitas.CellMouseEnter += (s, e) =>
+            data_grid_mascotas.CellMouseEnter += (s, e) =>
             {
                 if (e.RowIndex >= 0)
-                    dgvCitas.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(225, 235, 255);
+                    data_grid_mascotas.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(225, 235, 255);
             };
 
-            dgvCitas.CellMouseLeave += (s, e) =>
+            data_grid_mascotas.CellMouseLeave += (s, e) =>
             {
                 if (e.RowIndex >= 0)
-                    dgvCitas.Rows[e.RowIndex].DefaultCellStyle.BackColor =
+                    data_grid_mascotas.Rows[e.RowIndex].DefaultCellStyle.BackColor =
                         e.RowIndex % 2 == 0 ? Color.FromArgb(245, 247, 250) : Color.FromArgb(235, 240, 255);
             };
         }
@@ -257,8 +257,8 @@ namespace Veterinaria
 
         private void dgvCitas_MouseClick(object sender, MouseEventArgs e)
         {
-            dgvCitas.DefaultCellStyle.SelectionBackColor = Color.MediumPurple; // Fondo al seleccionar
-            dgvCitas.DefaultCellStyle.SelectionForeColor = Color.White;        // Texto al seleccionar
+            data_grid_mascotas.DefaultCellStyle.SelectionBackColor = Color.MediumPurple; // Fondo al seleccionar
+            data_grid_mascotas.DefaultCellStyle.SelectionForeColor = Color.White;        // Texto al seleccionar
 
         }
 
@@ -269,9 +269,9 @@ namespace Veterinaria
 
         private void dgvCitas_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvCitas.Columns.Contains("_id") && dgvCitas.SelectedRows.Count > 0)
+            if (data_grid_mascotas.Columns.Contains("_id") && data_grid_mascotas.SelectedRows.Count > 0)
             {
-                 var fila = dgvCitas.SelectedRows[0];
+                 var fila = data_grid_mascotas.SelectedRows[0];
                 _citaSeleccionadaId = fila.Cells["_id"].Value?.ToString();
             }
             else
@@ -291,8 +291,23 @@ namespace Veterinaria
 
         private void button1_Click(object sender, EventArgs e)
         {
-            UserControlMascota mascotas = new UserControlMascota();
+            UserControlMascota mascotas = new UserControlMascota(_usuarioActual);
+            // Suscribir para ocultar el panel cuando la mascota sea registrada
+            mascotas.MascotaRegistrada += (s, ev) =>
+            {
+                // Ejecutar en el hilo de UI
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() => panelRegMascota.Visible = false));
+                }
+                else
+                {
+                    panelRegMascota.Visible = false;
+                }
+            };
+            
             panelRegMascota.Controls.Add(mascotas);
+            panelRegMascota.Visible = true;
         }
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvCitas = new System.Windows.Forms.DataGridView();
+            this.data_grid_mascotas = new System.Windows.Forms.DataGridView();
             this.PanelCerrarSAd = new System.Windows.Forms.Panel();
             this.CerrarSesionUsuario = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,29 +45,31 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panelRegMascota = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCitas)).BeginInit();
+            this.panelnohaymascotas = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)(this.data_grid_mascotas)).BeginInit();
             this.PanelCerrarSAd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogAdpictBox)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panelnohaymascotas.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dgvCitas
+            // data_grid_mascotas
             // 
-            this.dgvCitas.AllowUserToAddRows = false;
-            this.dgvCitas.AllowUserToDeleteRows = false;
-            this.dgvCitas.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(249)))));
-            this.dgvCitas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCitas.Location = new System.Drawing.Point(31, 819);
-            this.dgvCitas.Name = "dgvCitas";
-            this.dgvCitas.ReadOnly = true;
-            this.dgvCitas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCitas.Size = new System.Drawing.Size(1023, 148);
-            this.dgvCitas.TabIndex = 10;
-            this.dgvCitas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCitas_CellContentClick);
-            this.dgvCitas.SelectionChanged += new System.EventHandler(this.dgvCitas_SelectionChanged);
-            this.dgvCitas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvCitas_MouseClick);
+            this.data_grid_mascotas.AllowUserToAddRows = false;
+            this.data_grid_mascotas.AllowUserToDeleteRows = false;
+            this.data_grid_mascotas.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(242)))), ((int)(((byte)(249)))));
+            this.data_grid_mascotas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.data_grid_mascotas.Location = new System.Drawing.Point(19, 103);
+            this.data_grid_mascotas.Name = "data_grid_mascotas";
+            this.data_grid_mascotas.ReadOnly = true;
+            this.data_grid_mascotas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.data_grid_mascotas.Size = new System.Drawing.Size(1157, 309);
+            this.data_grid_mascotas.TabIndex = 10;
+            this.data_grid_mascotas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCitas_CellContentClick);
+            this.data_grid_mascotas.SelectionChanged += new System.EventHandler(this.dgvCitas_SelectionChanged);
+            this.data_grid_mascotas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvCitas_MouseClick);
             // 
             // PanelCerrarSAd
             // 
@@ -151,13 +153,12 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BackgroundImage = global::Veterinaria.Properties.Resources.Captura_de_pantalla_2025_10_30_130553;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.panelnohaymascotas);
             this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.data_grid_mascotas);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
             this.panel1.Location = new System.Drawing.Point(50, 166);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1197, 428);
@@ -181,7 +182,7 @@
             // 
             this.pictureBox2.BackgroundImage = global::Veterinaria.Properties.Resources.Captura_de_pantalla_2025_10_30_132816;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(547, 184);
+            this.pictureBox2.Location = new System.Drawing.Point(327, 58);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(94, 92);
             this.pictureBox2.TabIndex = 24;
@@ -227,7 +228,7 @@
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(113)))), ((int)(((byte)(113)))), ((int)(((byte)(130)))));
-            this.label3.Location = new System.Drawing.Point(408, 329);
+            this.label3.Location = new System.Drawing.Point(188, 203);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(369, 23);
             this.label3.TabIndex = 20;
@@ -239,7 +240,7 @@
             this.label2.BackColor = System.Drawing.Color.White;
             this.label2.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(113)))), ((int)(((byte)(113)))), ((int)(((byte)(130)))));
-            this.label2.Location = new System.Drawing.Point(434, 295);
+            this.label2.Location = new System.Drawing.Point(214, 169);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(316, 29);
             this.label2.TabIndex = 20;
@@ -247,10 +248,21 @@
             // 
             // panelRegMascota
             // 
-            this.panelRegMascota.Location = new System.Drawing.Point(427, 111);
+            this.panelRegMascota.Location = new System.Drawing.Point(295, 624);
             this.panelRegMascota.Name = "panelRegMascota";
-            this.panelRegMascota.Size = new System.Drawing.Size(532, 560);
+            this.panelRegMascota.Size = new System.Drawing.Size(648, 715);
             this.panelRegMascota.TabIndex = 26;
+            this.panelRegMascota.Visible = false;
+            // 
+            // panelnohaymascotas
+            // 
+            this.panelnohaymascotas.Controls.Add(this.pictureBox2);
+            this.panelnohaymascotas.Controls.Add(this.label3);
+            this.panelnohaymascotas.Controls.Add(this.label2);
+            this.panelnohaymascotas.Location = new System.Drawing.Point(220, 126);
+            this.panelnohaymascotas.Name = "panelnohaymascotas";
+            this.panelnohaymascotas.Size = new System.Drawing.Size(704, 258);
+            this.panelnohaymascotas.TabIndex = 26;
             // 
             // FrmCitas
             // 
@@ -265,14 +277,13 @@
             this.Controls.Add(this.panelRegMascota);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanelCerrarSAd);
-            this.Controls.Add(this.dgvCitas);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "FrmCitas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.FrmCitas_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCitas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data_grid_mascotas)).EndInit();
             this.PanelCerrarSAd.ResumeLayout(false);
             this.PanelCerrarSAd.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogAdpictBox)).EndInit();
@@ -280,12 +291,14 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panelnohaymascotas.ResumeLayout(false);
+            this.panelnohaymascotas.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dgvCitas;
+        private System.Windows.Forms.DataGridView data_grid_mascotas;
         private System.Windows.Forms.Panel PanelCerrarSAd;
         private System.Windows.Forms.Button CerrarSesionUsuario;
         private System.Windows.Forms.Label label1;
@@ -302,5 +315,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panelRegMascota;
+        private System.Windows.Forms.Panel panelnohaymascotas;
     }
 }
